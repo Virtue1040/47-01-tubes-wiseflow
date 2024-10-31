@@ -12,15 +12,19 @@ class RolesSeeder extends Seeder
     {
         $default = array(
             array(
-                'role_name' => 'Owner',
+                'role_name' => 'Admin',
                 'role_level' => 10
             ),
             array(
-                'role_name' => 'Admin',
+                'role_name' => 'Owner',
                 'role_level' => 5
             ),
             array(
-                'role_name' => 'Costumer',
+                'role_name' => 'Co-Owner',
+                'role_level' => 4
+            ),
+            array(
+                'role_name' => 'Guest',
                 'role_level' => 1
             ),
         );
