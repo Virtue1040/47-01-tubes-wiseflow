@@ -21,14 +21,23 @@ Route::get('/test', function () {
 //     return view('login');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/view/dashboard', function () {
+    return view('view.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/view/property', function () {
+    return view('view.property');
+})->middleware(['auth', 'verified'])->name('property');
+
+Route::get('/view/home', function () {
+    return view('view.home');
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

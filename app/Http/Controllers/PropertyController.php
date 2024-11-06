@@ -13,7 +13,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
+        $properties = Property::all();
+        return view('properties.index', compact('properties'));
     }
 
     /**
@@ -21,7 +22,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        //
+        return view('properties.create');
     }
 
     /**
@@ -29,15 +30,16 @@ class PropertyController extends Controller
      */
     public function store(StorePropertyRequest $request)
     {
-        //
+        $property = Property::create($request->validate());
+        return redirect()->route('properties.index')->with('success', 'Property berhasil dibuat.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Property $property)
+    public function showDetail(Property $property)
     {
-        //
+        return view('view/property_detail', compact('property'));
     }
 
     /**
@@ -45,7 +47,7 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        //
+        return view('properties.edit', compact('property'));
     }
 
     /**
@@ -53,7 +55,8 @@ class PropertyController extends Controller
      */
     public function update(UpdatePropertyRequest $request, Property $property)
     {
-        //
+        $property->update($request->validate());
+        return redirect()->route('properties.index')->with('success', 'Property berhasil diperbarui.');
     }
 
     /**
@@ -61,6 +64,7 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        $property->delete();
+        return redirect()->route('properties.index')->with('succes', 'Property berhasil dihapus');
     }
 }

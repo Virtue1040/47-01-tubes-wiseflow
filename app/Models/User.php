@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function contactInformation()
+    {
+        return $this->hasOne(ContactInformation::class, "id_user");
+    }
 }

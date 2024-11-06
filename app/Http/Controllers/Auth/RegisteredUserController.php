@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'telp' => ['required', 'string', 'max:255'],
+            // 'telp' => ['required', 'string', 'max:255'],
             'gender' => ['required', 'string', 'max:30'],
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
@@ -52,10 +52,11 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'gender' => $request->gender,
-            'no_hp' => $request->telp
+            'no_hp' => ''
         ]);
 
         event(new Registered($user));
+        event(new Registered($contact));
 
         Auth::login($user);
 

@@ -25,4 +25,9 @@ class ContactInformation extends Model
     ];
 
     protected $primaryKey = 'id_user';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

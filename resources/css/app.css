@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .test {
 
     background-color: red !important;
