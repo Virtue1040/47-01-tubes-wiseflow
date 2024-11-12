@@ -1,3 +1,18 @@
+                {{-- <x-dropdown align="left" width="48" contentClasses="py-2 bg-gray-100 dark:bg-gray-800">
+   
+                    <x-slot name="trigger">
+                        <button class="px-4 py-2 text-white bg-blue-500 rounded">
+                            Open Dropdown
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Option 1</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Option 2</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Option 3</a>
+                    </x-slot>
+                </x-dropdown> --}}
+
 @props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white dark:bg-gray-700'])
 
 @php

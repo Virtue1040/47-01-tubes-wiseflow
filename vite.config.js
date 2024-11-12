@@ -7,7 +7,6 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/js/popupMakeProperty.js',
                 'resources/js/jquery.js'
             ],
             refresh: true,

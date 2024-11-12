@@ -19,10 +19,12 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'email',
+        'id_role',
         'password',
     ];
 
     protected $primaryKey = 'id_user';
+    protected $guarded  = 'id_user';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,5 +52,9 @@ class User extends Authenticatable
     public function contactInformation()
     {
         return $this->hasOne(ContactInformation::class, "id_user");
+    }
+    public function role()
+    {
+        return $this->hasOne(Roles::class, "id_role");
     }
 }

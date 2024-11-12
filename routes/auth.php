@@ -1,12 +1,13 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -39,7 +40,25 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('view/property/detail/{id}', [PropertyController::class, "showDetail"])
         ->name('property.detail');
-
+    Route::get('view/property', [PropertyController::class, "show"])
+        ->name('property');
+    Route::get('view/dashboard', [DashboardController::class, "show"])
+        ->name('dashboard');
+    Route::get('view/home', [HomeController::class, "show"])
+        ->name('home');
+    Route::get('view/contact', [ContactController::class, "show"])
+        ->name('contact');
+    Route::get('view/chat', [CommunicationController::class, "show"])
+        ->name('chat');
+    Route::get('view/booking', [BookingController::class, "show"])
+        ->name('booking');
+    Route::get('view/calendar', [SchedulerController::class, "show"])
+        ->name('calendar');
+    Route::get('view/task', [SchedulerController::class, "showTask"])
+        ->name('task');
+    Route::post('view/property/create', [PropertyController::class, "store"])
+        ->name('property.store');
+        
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

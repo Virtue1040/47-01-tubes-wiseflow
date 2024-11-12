@@ -10,24 +10,45 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <script src={{ asset("js/popupMakeProperty.js")}}></script>
         <!-- Jquery -->
         <x-default-global-js></x-default-global-js>
         <!-- Scripts -->
+        <script src={{ asset("js/modal_create.js")}}></script>
+        <script src={{ asset("js/handle_upload.js")}}></script>
+        <script src={{ asset("js/handle_drag.js")}}></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @include('sweetalert::alert')
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                iconColor: 'white',
+                customClass: {
+                    popup: 'colored-toast',
+                },
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+            })
 
-        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/popupMakeProperty.js'])
+            $(document).ready(function() {
+                @if (session('alert'))
+                    Toast.fire({
+                        icon: '{{ session('alert')['type'] }}',
+                        title: '{{ session('alert')['message'] }}',
+                    });
+                @endif
+                
+            })
+            
+            
+        </script>
     </head>
 
-    <body x-data="{ open: false, openSidebar: true }" class="relative h-full font-sans antialiased">
-        <script>
-             
-            $(document).ready(function() {
-                console.log($("#popupTest"));
-                init_create_property($("#popupTest"), ['Detail', 'Fasilitas', 'Dokumentasi']);
-            })
-        </script>
-        <x-card.form-create-property id="popupTest"></x-card.form-create-property>
-        <div class="flex h-full bg-gray-100 dark:bg-gray-900">
+    <body x-data="{ open: false, openSidebar: true }" class="relative h-auto font-sans antialiased">
+ 
+        <div class="flex h-auto bg-gray-100 dark:bg-gray-900">
             <!-- Layout Navigation -->
             @include("layouts.navigation")
             <div class="flex flex-col w-full h-auto">
@@ -47,7 +68,9 @@
                         {{ $header }}
                     </div>
                     <div class="flex float-right justify-end mr-5 w-full">
-                        <div class="hidden float-right md:flex md:items-center">
+                        <div class="hidden float-right md:flex md:items-center md:gap-[5px]">
+                            <x-text-input id="search" style="" class="block w-[250px] h-[50%] bg-gray-200" placeholder="Search"  type="text" name="search"
+                                      />
                             <button class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 bg-white rounded-md border border-transparent transition duration-150 ease-in-out dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
                                 <x-icon.notification p=20 l=20></x-icon.notification>
                             </button>
@@ -150,7 +173,7 @@
                 
                 <div class="h-auto bg-white min-h-fit dark:bg-gray-800">
                     <div class="h-auto md:min-h-[calc(100vh-70px)] min-h-fit dark:bg-gray-900 bg-[#ececec] p-[0px] md:p-[25px]  dark:border-gray-800 border-white rounded-xl">
-                        <div class="h-auto min-h-screen md:min-h-[calc(100vh-120px)] rounded-xl border-2 dark:bg-[#233347] bg-gray-100 border-[#5E93DA] shadow-lg p-[25px] ">
+                        <div class="h-auto min-h-screen md:min-h-[calc(100vh-120px)] rounded-xl border-2 dark:bg-gray-800 dark:bg-opacity-60 bg-gray-100 border-[#5E93DA] shadow-lg p-[25px] ">
                             {{ $slot }}
                         </div>
                     </div>

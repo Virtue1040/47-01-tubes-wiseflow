@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('scheduler', function (Blueprint $table) {
             $table->id('id_schedule');
+            $table->integer('id_property')->length(11)->nullable();
+            $table->foreign('id_property')->references('id_property')->on('property');
             $table->integer('id_user');
             $table->timestamp('schedule_date');
             $table->char('type_activity', 10);
+            $table->timestamps();
         });
     }
 

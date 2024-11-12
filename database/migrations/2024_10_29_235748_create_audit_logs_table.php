@@ -16,7 +16,7 @@ return new class extends Migration
             $table->char('name', 50);
             $table->char('type_log', 10);
             $table->string('afterChange');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 

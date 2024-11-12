@@ -13,21 +13,23 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('orderNumber');
-            $table->integer('id_user');
-            $table->timestamp('created_at');
-            $table->char('status_order', 10);
+            $table->integer('id_user')->length(11);
+            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->timestamps();
         });
 
         Schema::create('orderdetails', function (Blueprint $table) {
             $table->id('orderNumber');
             $table->char('checkNumber', 50)->unique();
-            $table->char('status_order', 10);
+            $table->char('status', 10);
             $table->char('type_order', 20);
+            $table->integer('id_item')->length(11);
+            $table->integer('quantity')->length(11);
             $table->bigInteger('total_order');
         });
 
         Schema::create('payments', function (Blueprint $table) {
-            $table->id('checkNumber');
+            $table->char('checkNumber', 50)->primary();
             $table->char('id_transaction', 50)->unique();
             $table->bigInteger('nominal');
             $table->char('status_payment', 10);

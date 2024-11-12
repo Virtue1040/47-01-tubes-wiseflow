@@ -20,11 +20,7 @@ class RolesSeeder extends Seeder
                 'role_level' => 5
             ),
             array(
-                'role_name' => 'Co-Owner',
-                'role_level' => 4
-            ),
-            array(
-                'role_name' => 'Guest',
+                'role_name' => 'Residents',
                 'role_level' => 1
             ),
         );

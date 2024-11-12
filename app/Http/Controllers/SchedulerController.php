@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSchedulerRequest;
 use App\Http\Requests\UpdateSchedulerRequest;
 use App\Models\Scheduler;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SchedulerController extends Controller
 {
@@ -35,9 +37,17 @@ class SchedulerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Scheduler $scheduler)
+    public function show(Request $request): View
     {
-        //
+        return view('view.calendar');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showTask(Request $request): View
+    {
+        return view('view.calendar');
     }
 
     /**

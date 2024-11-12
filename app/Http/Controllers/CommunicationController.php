@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommunicationRequest;
 use App\Http\Requests\UpdateCommunicationRequest;
 use App\Models\Communication;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CommunicationController extends Controller
 {
@@ -35,9 +37,9 @@ class CommunicationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Communication $communication)
+    public function show(Request $request): View
     {
-        //
+        return view('view.chat');
     }
 
     /**

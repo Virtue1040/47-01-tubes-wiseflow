@@ -5,24 +5,26 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePropertyRequest;
 use App\Http\Requests\UpdatePropertyRequest;
 use App\Models\Property;
+use App\Models\Property_Address;
+use App\Models\Property_Contact;
+use App\Models\Album;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class PropertyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function show()
     {
-        $properties = Property::all();
-        return view('properties.index', compact('properties'));
-    }
+        $id_user = Auth::user()->id_user; 
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('properties.create');
+        $property = Property::where('id_user_owner', $id_user)->with('album')->get();
+        return view("view.property",[
+            'property' => $property,
+        ]);
     }
 
     /**
@@ -30,8 +32,57 @@ class PropertyController extends Controller
      */
     public function store(StorePropertyRequest $request)
     {
-        $property = Property::create($request->validate());
-        return redirect()->route('properties.index')->with('success', 'Property berhasil dibuat.');
+        $request->validate([
+            'property_name' => ['required', 'string', 'max:255'],
+            'property_desc' => ['required', 'string'],
+            'property_category' => ['required', 'string', 'max:50'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'contact_phone' => ['required', 'string', 'max:30'],
+            'street_name' => ['required', 'string'],
+            'province' => ['required', 'string'],
+            'zipcode' => ['required', 'string'],
+            'country' => ['required', 'string'],
+            'state' => ['required', 'string'],
+            'album' => ['required', 'image', 'file']
+        ]);
+
+        $property = Property::create([
+            'id_user_owner' => Auth::user()->id_user,
+            'property_name' => $request->property_name,
+            'property_desc' => $request->property_desc,
+            'property_category' => $request->property_category,
+        ]);
+
+        $property_address = Property_Address::create([
+            'id_property' => $property->id_property,
+            'street_name' => $request->property_name,
+            'province' => $request->province,
+            'zipcode' => $request->zipcode,
+            'country' => $request->country,
+            'state' => $request->state
+        ]);
+
+        $property_contact = Property_Contact::create([
+            'id_property' => $property->id_property,
+            'contact_name' => $request->contact_name,
+            'contact_phone' => $request->contact_phone,
+        ]);
+
+        if ($request->file('album')) {  $albumName = $request->file('album')->store('/album'); 
+            $album = Album::create([
+                'id_property' => $property->id_property,
+                'imagePath' => $albumName
+            ]);
+            $property->update([
+                'id_cover' => $album->id_album
+            ]);
+        }
+        
+        session()->flash('alert', [
+            'type' => 'success', 
+            'message' => 'Property Created'
+        ]);
+        return redirect()->route('property');
     }
 
     /**
