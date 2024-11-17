@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+option {
+    background-color: white;
+}
+@media (prefers-color-scheme: dark) {
+    option {
+        background-color: black;
+    }
+    * {
+        scrollbar-color: #686868 #424242 ;
+    }
+}
+
 .colored-toast.swal2-icon-success {
     background-color: #a5dc86 !important;
 }

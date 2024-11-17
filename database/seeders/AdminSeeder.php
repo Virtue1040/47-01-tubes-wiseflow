@@ -7,6 +7,8 @@ use App\Models\ContactInformation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class AdminSeeder extends Seeder
 {
@@ -15,12 +17,12 @@ class AdminSeeder extends Seeder
         $default = array(
             array(
                 'username' => 'Admin',
-                'email' => 'rafi.hidayat1313@gmail.com',
+                'email' => 'rafbbbb@gmail.com',
                 'password' => '12345678',
                 'first_name' => 'Rafi',
                 'last_name' => 'Hidayat',
                 'gender' => 'Laki-laki',
-                'id_role' => '1',
+                'id_role' => 1,
             ),
             array(
                 'username' => 'Penghuni',
@@ -29,7 +31,7 @@ class AdminSeeder extends Seeder
                 'first_name' => 'Peng',
                 'last_name' => 'Nigga',
                 'gender' => 'Laki-laki',
-                'id_role' => '2',
+                'id_role' => 3,
             ),
         );
 
@@ -37,7 +39,6 @@ class AdminSeeder extends Seeder
             $user = User::create([
                 'username' => $users['username'],
                 'email' => $users['email'],
-                'id_role' => $users['id_role'],
                 'password' => Hash::make($users['password']),
             ]);
             $contact = ContactInformation::create([
@@ -48,6 +49,9 @@ class AdminSeeder extends Seeder
                 'gender' => $users['gender'],
                 'no_hp' => ''
             ]);
+            
+            $userx = User::find($user->id_user);
+            $userx->assignRole(Role::find($users['id_role'])->name);
         }
     }
 }

@@ -61,8 +61,9 @@ class CommunicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Communication $communication)
+    public function destroy(Communication $communication, Request $request)
     {
-        //
+        $communication = Communication::find($request->id);
+        $communication->delete();
     }
 }

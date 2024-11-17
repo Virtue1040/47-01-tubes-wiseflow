@@ -6,10 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -19,8 +20,9 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'email',
-        'id_role',
         'password',
+        'social_id',
+        'social_type'
     ];
 
     protected $primaryKey = 'id_user';
@@ -52,9 +54,5 @@ class User extends Authenticatable
     public function contactInformation()
     {
         return $this->hasOne(ContactInformation::class, "id_user");
-    }
-    public function role()
-    {
-        return $this->hasOne(Roles::class, "id_role");
     }
 }

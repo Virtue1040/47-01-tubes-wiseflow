@@ -12,10 +12,15 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\SocialiteController;
+
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
+
+    Route::get('/login/OAuth2/{provider}', [SocialiteController::class, 'redirect']);
+    Route::get('/callback/OAuth2/{provider}', [SocialiteController::class, 'handleCallback']);
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
@@ -37,13 +42,16 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => ['auth']], function() {
+    // View Route
     Route::get('view/property/detail/{id}', [PropertyController::class, "showDetail"])
         ->name('property.detail');
-    Route::get('view/property', [PropertyController::class, "show"])
-        ->name('property');
     Route::get('view/dashboard', [DashboardController::class, "show"])
         ->name('dashboard');
+    Route::get('view/property', [PropertyController::class, "show"])
+        ->name('property');
+    Route::post('view/property/create', [PropertyController::class, "store"])
+        ->name('property.store');
     Route::get('view/home', [HomeController::class, "show"])
         ->name('home');
     Route::get('view/contact', [ContactController::class, "show"])
@@ -56,9 +64,8 @@ Route::middleware('auth')->group(function () {
         ->name('calendar');
     Route::get('view/task', [SchedulerController::class, "showTask"])
         ->name('task');
-    Route::post('view/property/create', [PropertyController::class, "store"])
-        ->name('property.store');
-        
+
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

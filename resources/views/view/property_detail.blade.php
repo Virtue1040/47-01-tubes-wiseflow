@@ -18,13 +18,13 @@
 
         <div class="flex gap-20 justify-center items-center p-4 mx-auto mt-8 w-full max-w-lg bg-white rounded-lg border border-gray-300">
             <a href="#" class="inline-block text-gray-800 transition duration-200 transform hover:text-blue-500 hover:scale-110" onclick="setActive(this, 'homeContent')">
-                <x-svg.homeprop class="w-12 h-12"></x-svg.homeprop>
+                <x-svg.homeprop p="48" l="48"></x-svg.homeprop>
             </a>
             <a href="#" class="inline-block text-gray-800 transition duration-200 transform hover:text-blue-500 hover:scale-110" onclick="setActive(this, 'penghuniContent')">
-                <x-svg.penghuni class="w-12 h-12"></x-svg.penghuni>
+                <x-svg.penghuni p="48" l="48"></x-svg.penghuni>
             </a>
             <a href="#" class="inline-block text-gray-800 transition duration-200 transform hover:text-blue-500 hover:scale-110" onclick="setActive(this, 'tagihanContent')">
-                <x-svg.tagihan class="w-12 h-12"></x-svg.tagihan>
+                <x-svg.tagihan p="48" l="48"></x-svg.tagihan>
             </a>
         </div>        
 

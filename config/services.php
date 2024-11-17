@@ -24,6 +24,26 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect'      => env('GOOGLE_REDIRECT')
+    ],
+
+    'azure' => [    
+        'client_id' => env('AZURE_CLIENT_ID'),
+        'client_secret' => env('AZURE_CLIENT_SECRET'),
+        'redirect' => env('AZURE_REDIRECT_URI'),
+        'tenant' => env('AZURE_TENANT_ID'),
+        'proxy' => env('PROXY')  // optionally
+      ],
+
+    'facebook' => [    
+        'client_id' => env('FACEBOOK_CLIENT_ID'),  
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),  
+        'redirect' => env('FACEBOOK_REDIRECT_URI') 
+      ],
+
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],

@@ -1,5 +1,3 @@
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <x-app-layout>
     <script>
         let oldInput = @json(old()); 
@@ -10,7 +8,6 @@
         function createProperty() {
             if (createPropertyBounced) { return; }
             createPropertyBounced = true;
-            console.log("WHAT DU HELLLLLL");
             let returns = init_create_modal("property_create", [
                 {
                     icon: 'detail',
@@ -37,7 +34,7 @@
                                 <x-input-error :messages="$errors->get('property_name')" class="mt-1" />
                                 <div class="mt-3 w-full h-full min-w-[0px]">
                                     <x-input-label for="property_category">Category Property <a class="text-red-700">*</a></x-input-label>
-                                    <x-select id="property_category" style="" class="block mt-2 w-full h-full bg-gray-200" placeholder="Category Property" name="property_category"
+                                    <x-select id="property_category" class=" p-[6.5px] block mt-2 w-full h-full bg-gray-200" placeholder="Category Property" name="property_category"
                                         :value="old('property_category')"  autofocus>
                                         <option value="Kontrakan">Kontrakan</option>
                                         <option value="Kost">Kost</option>
@@ -126,7 +123,7 @@
             {
                 lastButton: "Create Property",
                 onCreate: function() {
-                    handle_drag($("#property_upload_area"), $("#albumImage"), ['image/jpeg', 'image/png', 'image/gif', 'image/jpg']);
+                    
                     createPropertyBounced = false;
                 },
             })

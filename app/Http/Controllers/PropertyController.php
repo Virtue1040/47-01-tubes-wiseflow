@@ -9,20 +9,26 @@ use App\Models\Property_Address;
 use App\Models\Property_Contact;
 use App\Models\Album;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-
 
 class PropertyController extends Controller
 {
+
+    function __construct()
+    {
+         $this->middleware('permission:property-list|property-create|property-edit|property-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:property-create', ['only' => ['create','store']]);
+         $this->middleware('permission:property-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:property-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function show()
     {
-        $id_user = Auth::user()->id_user; 
-
+        $id_user = Auth::user()->id_user;
         $property = Property::where('id_user_owner', $id_user)->with('album')->get();
-        return view("view.property",[
+        return view('view.property', [
             'property' => $property,
         ]);
     }
@@ -43,7 +49,7 @@ class PropertyController extends Controller
             'zipcode' => ['required', 'string'],
             'country' => ['required', 'string'],
             'state' => ['required', 'string'],
-            'album' => ['required', 'image', 'file']
+            'album' => ['required', 'image', 'file'],
         ]);
 
         $property = Property::create([
@@ -59,7 +65,7 @@ class PropertyController extends Controller
             'province' => $request->province,
             'zipcode' => $request->zipcode,
             'country' => $request->country,
-            'state' => $request->state
+            'state' => $request->state,
         ]);
 
         $property_contact = Property_Contact::create([
@@ -68,19 +74,20 @@ class PropertyController extends Controller
             'contact_phone' => $request->contact_phone,
         ]);
 
-        if ($request->file('album')) {  $albumName = $request->file('album')->store('/album'); 
+        if ($request->file('album')) {
+            $albumName = $request->file('album')->store('/album');
             $album = Album::create([
                 'id_property' => $property->id_property,
-                'imagePath' => $albumName
+                'imagePath' => $albumName,
             ]);
             $property->update([
-                'id_cover' => $album->id_album
+                'id_cover' => $album->id_album,
             ]);
         }
-        
+
         session()->flash('alert', [
-            'type' => 'success', 
-            'message' => 'Property Created'
+            'type' => 'success',
+            'message' => 'Property Created',
         ]);
         return redirect()->route('property');
     }

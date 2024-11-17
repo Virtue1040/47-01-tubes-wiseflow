@@ -1,17 +1,24 @@
 <x-app-layout>
+    <script>
+        $(document).ready(function() {
+            handle_itemlist($('#booking-list'), 'booking/get',{
+                'id_booking': 'ID Booking',
+                'id_property': 'Property',
+                'status': 'Status',
+                'checkin': 'Check In',
+                'checkout': 'Check Out',
+            }, {});
+        })
+    </script>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {{ __('Dashboard') }}
+            {{ __('Bookings') }}
         </h2>
     </x-slot>
 
     <div>
-        <div class="mx-auto max-w-7xl">
-            <div class="overflow-hidden bg-white rounded-lg shadow-sm dark:bg-gray-800">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+        <div class="mx-auto max-w-5xl">
+            <x-card.list-item id="booking-list"/>
         </div>
     </div>
 </x-app-layout>

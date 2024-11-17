@@ -154,12 +154,12 @@
     </script>
 </head>
 
-<body class="bg-[#ececec] dark:bg-gray-900">
+<body class="bg-[#ececec] dark:bg-[#09090B]">
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="flex flex-col justify-center items-center w-screen h-screen">
         <div
-            class=" flex flex-row w-full md:w-[800px] md:h-auto h-full  min-h-[600px] py-[10px] px-[10px] bg-white dark:bg-gray-800 bg-opacity-[.30] rounded-2xl shadow-2xl">
+            class=" flex flex-row w-full md:w-[800px] md:h-auto h-full  min-h-[600px] py-[10px] px-[10px] bg-white dark:bg-[#18181B] bg-opacity-[.30] rounded-2xl shadow-2xl">
             <div class="w-[100%] hidden md:flex flex-col justify-center items-center bg-[#5E93DA] relative p-[10px] rounded-2xl"
                 id="imageContainer"> {{-- bg-[url('/resources/image/cover.jpg')]  --}}
                 <x-svg.rumah></x-svg.rumah>
@@ -296,8 +296,7 @@
                         </x-primary-button>
                     </div>
                     <br>
-                    <x-input-label>Have an account? <x-a-label href="{{ route('login') }}" class="font-bold">Sign
-                            In</x-a-label></x-input-label>
+                    <x-input-label>Have an account? <x-a-label href="{{ route('login') }}" class="font-bold">Sign In</x-a-label></x-input-label>
                 </form>
             </div>
         </div>

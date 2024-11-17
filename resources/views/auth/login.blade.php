@@ -17,11 +17,11 @@
     </script>
 </head>
 
-<body class="bg-[#ececec] dark:bg-gray-900">
+<body class="bg-[#ececec] dark:bg-[#09090B]">
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="flex flex-col justify-center items-center w-screen h-screen">   
-        <div class="flex flex-row w-full md:w-[800px] md:h-[600px] h-full py-[10px] px-[10px] bg-white dark:bg-gray-800 bg-opacity-[.30] rounded-2xl shadow-2xl">
+        <div class="flex flex-row w-full md:w-[800px] md:h-[600px] h-full py-[10px] px-[10px] bg-white dark:bg-[#18181B] bg-opacity-[.30] rounded-2xl shadow-2xl">
              <div class="w-[100%] hidden md:flex flex-col justify-center items-center bg-[#5E93DA] relative p-[10px] rounded-2xl"> {{--bg-[url('/resources/image/cover.jpg')]  --}}
                 <x-svg.rumah></x-svg.rumah> 
                 <x-icon.wiseflow-text class=""></x-icon.wiseflow-text>
@@ -70,14 +70,20 @@
                 </div>
                 <x-input-label class="mt-6 text-sm">Or Sign In With</x-input-label><br>
                 <div class="flex gap-[15px] w-full min-w-[300px] justify-center items-center">
-                    <div class="flex justify-center items-center hover:shadow-xl w-[50px] h-[50px] p-[10px] cursor-pointer">
-                        <x-icon.google></x-icon.google>
+                    <div class="flex justify-center items-center hover:shadow-[0px_10px_20px_rgba(94,147,218,0.2)] rounded-full w-[50px] h-[50px] p-[10px] cursor-pointer">
+                        <a class="w-full h-full" href="{{ url('/login/OAuth2/Google') }}">
+                            <x-icon.google/>
+                        </a>
                     </div>
-                    <div class="flex justify-center items-center hover:shadow-xl w-[50px] h-[50px] p-[10px] cursor-pointer">
-                        <x-icon.facebook></x-icon.facebook>
+                    <div class="flex justify-center items-center hover:shadow-[0px_10px_20px_rgba(94,147,218,0.2)] rounded-full w-[50px] h-[50px] p-[10px] cursor-pointer ">
+                        <a class="w-full h-full" href="{{ url('/login/OAuth2/Facebook') }}">
+                            <x-icon.facebook/>
+                        </a>
                     </div>
-                    <div class="flex justify-center items-center hover:shadow-xl w-[50px] h-[50px] p-[10px] cursor-pointer">
-                        <x-icon.apple></x-icon.apple>
+                    <div class="flex justify-center items-center hover:shadow-[0px_10px_20px_rgba(94,147,218,0.2)] rounded-full w-[50px] h-[50px] p-[6px] cursor-pointer">
+                        <a class="w-full h-full" href="{{ url('/login/OAuth2/azure') }}">
+                            <x-icon.microsoft/>
+                        </a>
                     </div>
                 </div>
                 <br>

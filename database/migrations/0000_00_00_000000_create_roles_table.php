@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->integer('id_role', 1)->length(11)->primary();
-            $table->char('role_name', 50);
-            $table->integer('role_level');
-            $table->timestamps();
-        });
+        // Schema::create('roles', function (Blueprint $table) {
+        //     $table->integer('id_role', 1)->length(11)->primary();
+        //     $table->char('role_name', 50);
+        //     $table->integer('role_level');
+        //     $table->timestamps();
+        // });
     }
 
     /**
