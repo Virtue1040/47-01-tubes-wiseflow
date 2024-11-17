@@ -13,7 +13,7 @@
                     </x-slot>
                 </x-dropdown> --}}
 
-@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'bg-white dark:bg-[#18181B] p-1 border-gray-200 dark:border-[#464649] border-[1px]'])
+@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'bg-white dark:bg-[#18181B] p-1 border-gray-200 dark:border-[#464649] border-[1px]']) 
 
 @php
 $alignmentClasses = match ($align) {
