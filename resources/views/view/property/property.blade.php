@@ -237,7 +237,7 @@
                     $getTotalProp = 0;
                 @endphp
                 @foreach ($property as $getCate)
-                    @if (strtolower($getCate->property_category) === $value)
+                    @if (($getCate->property_category) === $value)
                         @php
                             $getAvailable += $getCate->total_available;
                             $getTotalRent += count($getCate->rent);
