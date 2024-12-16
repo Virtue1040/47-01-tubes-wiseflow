@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Middleware;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,12 +13,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->redirectUsersTo('/view/home');
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
-            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class
+            'permission' => CustomPermissionMiddleware::class,
+            'hasProperty' => \App\Http\Middleware\hasProperty::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'hasRole' => CheckUserRole::class,
+            'hasNoRole' => CheckUserNoRole::class,
+        ]);
+        $middleware->validateCsrfTokens([
+            'api/*',
+            'login',
+            'logout',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        
     })->create();

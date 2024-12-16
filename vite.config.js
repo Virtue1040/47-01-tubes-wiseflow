@@ -6,6 +6,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
+                'public/js/tinymce/skins/ui/oxide-dark/skin.css',
                 'resources/js/app.js',
                 'resources/js/jquery.js'
             ],

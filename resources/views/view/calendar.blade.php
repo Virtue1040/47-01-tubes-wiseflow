@@ -1,3 +1,5 @@
+
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
@@ -10,7 +12,9 @@
             <!-- Calendar View -->
             <div>
                 <!-- Month and Year Heading -->
-                <div class="text-center text-[#5E93DA] text-3xl font-bold mb-4">January, 2021</div>
+                <div class="text-center text-[#5E93DA] text-3xl font-bold mb-4">
+                    {{ \Carbon\Carbon::now()->format('F Y') }}
+                </div>
                 <!-- Calendar Box with increased size -->
                 <div class="grid grid-cols-7 gap-2 p-4 font-medium text-center text-gray-600 bg-gray-50 rounded-lg" style="width: 100%; height: 450px;">
                     <!-- Days of the week -->
@@ -21,7 +25,7 @@
                     <div>Thu</div>
                     <div>Fri</div>
                     <div>Sat</div>
-                    
+
                     <!-- Dates of the month (1-31) -->
                     <div class="p-4">1</div>
                     <div class="p-4">2</div>

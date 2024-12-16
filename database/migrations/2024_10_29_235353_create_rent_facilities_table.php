@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rentfacility', function (Blueprint $table) {
-            $table->integer('id_rentfacility')->length(11)->primary();
+            $table->integer('id_rentfacility', 1)->length(11)->primary();
             $table->integer('id_rent')->length(11);
-            $table->foreign('id_rent')->references('id_rent')->on('rents');
+            $table->foreign('id_rent')->references('id_rent')->on('rents')->onDelete('cascade');
+            $table->integer('id_facility')->length(11);
+            $table->foreign('id_facility')->references('id_facility')->on('facility')->onDelete('cascade');
             $table->integer('quantity')->length(11);
+            $table->integer('item_order')->length(11);
+            $table->timestamps();
         });
 
     }

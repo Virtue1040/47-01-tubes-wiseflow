@@ -21,7 +21,12 @@ class PermissionTableSeeder extends Seeder
            'property-list',
            'property-create',
            'property-edit',
-           'property-delete'
+           'property-delete',
+           'rent-list',
+           'rent-create',
+           'rent-edit',
+           'rent-delete',
+           'dashboard-list',
         ];
         
         foreach ($permissions as $permission) {

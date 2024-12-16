@@ -13,7 +13,7 @@ class HomeController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function show(Request $request): View
+    public function index(Request $request): View
     {
         return view('view.home');
     }

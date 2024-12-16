@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
+use GetStream\StreamChat\Client as StreamClient;
 
 class RegisteredUserController extends Controller
 {
@@ -37,16 +39,33 @@ class RegisteredUserController extends Controller
             // 'telp' => ['required', 'string', 'max:255'],
             'gender' => ['required', 'string', 'max:30'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'role' => ['required', 'integer', 'max:255'],
+            'role' => ['required', 'integer', 'max:255', 'exists:roles,id', 'different:1'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'id_role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
+
+        $client = new StreamClient(
+            getenv("STREAM_API_KEY"),
+            getenv("STREAM_API_SECRET"),
+            null,
+            null,
+            9 // timeout
+        );
+
+        $userStream = [
+            'id' => strval($user->id_user),
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'role' => 'user',
+            'image' => null,
+        ];
+
+        $client->upsertUser($userStream);
+
         $contact = ContactInformation::create([
             'id_user' => $user->id_user,
             'first_name' => $request->first_name,
@@ -55,12 +74,13 @@ class RegisteredUserController extends Controller
             'gender' => $request->gender,
             'no_hp' => ''
         ]);
+        $user->assignRole(Role::find($request->role)->name);
 
         event(new Registered($user));
         event(new Registered($contact));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('home', absolute: false));
     }
 }

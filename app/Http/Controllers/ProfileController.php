@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -57,4 +58,14 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function getProfile($id) {
+        $getUser = User::findOrFail($id);
+        $getUser->username = null;
+        $getUser->email_verified_at = null;
+        $getUser->password = null;
+        $getUser->social_id = null;
+        $getUser->remember_token = null;
+        return view('profile.profile', ['user' => $getUser]);
+    }   
 }

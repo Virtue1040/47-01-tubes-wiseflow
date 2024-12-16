@@ -44,5 +44,5 @@
     <stop offset="0.999447" stop-color="white"/>
     </radialGradient>
     </defs>
-    </svg>
+</svg>
     

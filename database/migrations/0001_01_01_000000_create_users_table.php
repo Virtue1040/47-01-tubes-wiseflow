@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('social_id')->nullable(); 
             $table->string('social_type')->nullable();
+            $table->string('social_avatar')->nullable();
+            $table->boolean('isVerified')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

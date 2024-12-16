@@ -6,13 +6,17 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "darkaonline/l5-swagger": "^8.6",
+        "get-stream/stream-chat": "^3.6",
+        "get-stream/stream-laravel": "^3.0",
         "laravel/framework": "^11.9",
+        "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "realrashid/sweet-alert": "^7.2",
         "socialiteproviders/microsoft": "^4.5",
-        "socialiteproviders/microsoft-azure": "^5.2",
         "spatie/laravel-permission": "^6.10",
+        "tinymce/tinymce": "^7.5",
         "yajra/laravel-datatables-oracle": "^11.0"
     },
     "require-dev": {

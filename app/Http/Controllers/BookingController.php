@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatebookingRequest;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -15,7 +16,12 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        return view('view.booking');
+    }
+
+    public function index2()
+    {
+        return view('view.all-booking');
     }
 
     /**
@@ -39,10 +45,44 @@ class BookingController extends Controller
      */
     public function show(Request $request): View
     {
-        return view('view.booking');
+        
     }
 
     public function get(Booking $book, Request $request)
+    {
+        $limit = $request->maxPage;
+        $filter = $request->search;
+        $page = $request->page;
+        $groupBy = $request->groupBy;
+        $bookings = $book::select(
+            'id_booking',
+            'bookings.id_user',
+            'bookings.id_property',
+            'bookings.id_rent',
+            'property_name',
+            'rent_name',
+            'checkin',
+            'checkout',
+            'status',
+        )
+        ->join('property', 'bookings.id_property', '=', 'property.id_property')
+        ->join('rents', 'bookings.id_rent', '=', 'rents.id_rent')
+        ->where('id_user', Auth::user()->id_user)
+        ->when($filter, function ($query, $search) {
+            $query->where('status', 'like', "%{$search}%")
+                  ->orWhere('id_booking', 'like', "%{$search}%");
+        })->when($request->orderBy, function ($query) use ($request) {
+            $orderBy = $request->orderBy;
+            $query->orderBy($orderBy, 'desc'); 
+        })->paginate($limit, ['*'], 'page', $page);
+        return response()->json([
+            "success" => true,
+            "message" => "Berhasil mengambil data Booking",
+            "data" => $bookings,
+        ], 200);
+    }
+
+    public function getAll(Booking $book, Request $request)
     {
         $limit = $request->maxPage;
         $filter = $request->search;
@@ -56,7 +96,11 @@ class BookingController extends Controller
             $orderBy = $request->orderBy;
             $query->orderBy($orderBy, 'desc'); 
         })->paginate($limit, ['*'], 'page', $page);
-        return response()->json($bookings);
+        return response()->json([
+            "success" => true,
+            "message" => "Berhasil mengambil data Booking",
+            "data" => $bookings,
+        ], 200);
     }
 
     /**

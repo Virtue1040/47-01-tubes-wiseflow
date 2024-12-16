@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://8000-idx-tubes-semester-3-1728983615977.cluster-e3wv6awer5h7kvayyfoein2u4a.cloudworkstations.dev/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -118,8 +118,6 @@ return [
     | Supported drivers: "file", "cache"
     |
     */
-
-    
     
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),

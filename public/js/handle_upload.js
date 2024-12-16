@@ -1,6 +1,5 @@
 function handle_upload(element) {
     let input = $(element);
-    console.log(input);
     let fileName = input[0].files.length > 0 ? input[0].files[0].name : "No file selected";
     let getParent = input.parent();
     getParent.find("a[name='fileName']").text(fileName);

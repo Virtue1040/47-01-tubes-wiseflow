@@ -16,8 +16,9 @@ return new class extends Migration
             $table->integer("id_property")->nullable()->length(11);
             $table->char('facility_name', 50);
             $table->char('facility_type', 25);
-            $table->string('facility_description');
-            $table->char("facility_image", 255);
+            $table->string('facility_desc');
+            $table->char("facility_image", 255)->nullable();
+            $table->timestamps();
         });
     }
 

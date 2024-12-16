@@ -13,8 +13,13 @@ class RolesSeeder extends Seeder
     public function run()
     {
         Role::create(['name' => 'Admin'])->syncPermissions(Permission::pluck('id','id')->all());
-        Role::create(['name' => 'Owner'])->syncPermissions(Permission::pluck('id','id')->all());
-        Role::create(['name' => 'Resident'])->syncPermissions(['property-list']);
+        Role::create(['name' => 'Owner'])->syncPermissions([
+            'property-list','property-create','property-edit','property-delete',
+            'rent-list','rent-create','rent-edit','rent-delete'
+        ]);
+        Role::create(['name' => 'Resident'])->syncPermissions([
+            'property-list'
+        ]);
         // $default = array(
         //     array(
         //         'role_name' => 'Admin',

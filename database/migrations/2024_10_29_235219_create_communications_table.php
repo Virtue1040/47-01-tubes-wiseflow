@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('id_com', 1)->length(11);
             $table->integer('id_group')->length(11);
             $table->integer('id_user')->length(11);
-            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');;
             $table->char('text', 255);
             $table->timestamps();
         });

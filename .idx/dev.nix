@@ -9,6 +9,7 @@
     pkgs.php82Packages.composer
     pkgs.nodejs_20
     pkgs.killall
+    pkgs.yarn
   ];
   # Sets environment variables in the workspace
   env = {};

@@ -17,6 +17,8 @@ class Property_Address extends Model
      */
     protected $fillable = [
         'id_property',
+        'longitude',
+        'latitude',
         'street_name',
         'province',
         'zipcode',
@@ -25,6 +27,10 @@ class Property_Address extends Model
     ];
 
     protected $primaryKey = 'id_property';
+
+    public function getDisplayName() {
+        return $this->street_name . ', ' . $this->province . ', ' . $this->state . ', ' . $this->zipcode . ', ' . $this->country;
+    }
 
     /**
      * Get the attributes that should be cast.

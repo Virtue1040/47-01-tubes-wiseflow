@@ -12,14 +12,15 @@ Route::get('/', function () {
 Route::get('cdn/icon/{filename}', function ($filename) {
     return view("components.icon." . $filename);
 });
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get("/.well-known/microsoft-identity-association.json", function () {
+    return response()->json([
+        "associatedApplications" => [
+            [
+                "applicationId" => env("AZURE_CLIENT_ID")
+            ]
+        ]
+    ],200);
 });
-
-
 
 require __DIR__.'/template.php';
 require __DIR__.'/auth.php';

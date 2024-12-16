@@ -15,7 +15,7 @@ class SchedulerController extends Controller
      */
     public function index()
     {
-        //
+        return view('view.calendar');
     }
 
     /**
@@ -39,7 +39,7 @@ class SchedulerController extends Controller
      */
     public function show(Request $request): View
     {
-        return view('view.calendar');
+        
     }
 
     /**

@@ -21,13 +21,16 @@ class ContactInformation extends Model
         'last_name',
         'no_hp',
         'gender',
+        'description',
         'email',
+        'profilePath',
     ];
 
     protected $primaryKey = 'id_user';
+    protected $table = 'contact_information';
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
 }

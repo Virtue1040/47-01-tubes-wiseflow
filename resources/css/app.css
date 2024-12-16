@@ -1,17 +1,16 @@
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 option {
-    background-color: white;
+    @apply dark:bg-black;
+    @apply bg-white;
 }
-@media (prefers-color-scheme: dark) {
-    option {
-        background-color: black;
-    }
-    * {
-        scrollbar-color: #686868 #424242 ;
-    }
+
+.dark {
+    color-scheme: dark;
 }
 
 .colored-toast.swal2-icon-success {
@@ -27,7 +26,11 @@ option {
 }
 
 .colored-toast.swal2-icon-info {
-    background-color: #3fc3ee !important;
+    background-color: #5E93DA !important;
+}
+
+.colored-toast {
+    border-radius: 8px;
 }
 
 .colored-toast.swal2-icon-question {

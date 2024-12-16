@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->integer("id_contact", 1)->length(11)->primary();
             $table->integer("id_user")->length(11);
-            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');;
             $table->char("name", 255);
             $table->string('email');
             $table->char('no_hp', 30);

@@ -4,11 +4,13 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\ContactInformation;
+use App\Services\StreamChatService;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use GetStream\StreamChat\Client as StreamClient;
 
 class AdminSeeder extends Seeder
 {
@@ -29,7 +31,16 @@ class AdminSeeder extends Seeder
                 'email' => 'penghuni@gmail.com',
                 'password' => '12345678',
                 'first_name' => 'Peng',
-                'last_name' => 'Nigga',
+                'last_name' => 'huni',
+                'gender' => 'Laki-laki',
+                'id_role' => 3,
+            ),
+            array(
+                'username' => 'Penghuni2',
+                'email' => 'penghuni2@gmail.com',
+                'password' => '12345678',
+                'first_name' => 'Peng',
+                'last_name' => 'huni',
                 'gender' => 'Laki-laki',
                 'id_role' => 3,
             ),
@@ -49,9 +60,12 @@ class AdminSeeder extends Seeder
                 'gender' => $users['gender'],
                 'no_hp' => ''
             ]);
+
+            $streamChatService = new StreamChatService;
+            $streamChatService->createUser(strval($user->id_user), $users['first_name'] . ' ' . $users['last_name'], null);
             
             $userx = User::find($user->id_user);
-            $userx->assignRole(Role::find($users['id_role'])->name);
+            $userx->assignRole([$users['id_role']]);
         }
     }
 }
