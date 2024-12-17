@@ -58,7 +58,7 @@
                         <?php
                             $property_id = View::getSection('property_id');
                         ?>
-                        @if (request()->routeIs(['property.detail', 'property.detail.rent.overview', 'property.detail.iuran', 'property.detail.reservation', 'property.detail.task', 'property.detail.transaction', 'property.edit']))
+                        @if (request()->routeIs(['property.detail','property.detail.calendar', 'property.detail.rent.overview', 'property.detail.iuran', 'property.detail.reservation', 'property.detail.task', 'property.detail.transaction', 'property.edit']))
                             <x-nav-div :href="route('property.detail', $property_id)" :active="request()->routeIs('property.detail')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-7 h-full p-[10px]">
                                     <x-icon.homeApp p="20" l="20" :active="request()->routeIs('property.detail')"></x-icon.property>
@@ -172,14 +172,14 @@
                     @endif
                 </x-nav-dropdown>
                 <x-nav-dropdown name="Communication">
-                    <x-nav-div :href="route('chat')" :active="request()->routeIs('chat')" class="w-full">
+                    <x-nav-div :href="route('chat')" :active="request()->routeIs('chat')" class="relative w-full">
                         <div class="flex gap-[15px] items-center mx-5  h-full p-[10px]">
                             <x-icon.chat p="20" l="20" :active="request()->routeIs('chat')"></x-icon.chat>
                             <div class="flex">
                                 <p>Chats</p><p class="text-[10px] leading-3">Beta</p><p></p>
                             </div>
                         </div>
-
+                        <p class="flex absolute top-1/2 -translate-y-1/2 right-[15px] w-[20px] h-[20px] bg-[#5E93DA] rounded-full opacity-100 items-center justify-center text-white hidden" id="chatNotification">1</p>
                     </x-nav-div>
                     <x-nav-div :href="route('contact')" :active="request()->routeIs('contact')" class="w-full">
                         <div class="flex gap-[15px] items-center mx-5  h-full p-[10px]">

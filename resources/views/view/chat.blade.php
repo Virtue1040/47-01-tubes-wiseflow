@@ -85,7 +85,7 @@
 </a>
                                                                 <div class="w-[20px] h-[20px] relative ${hideUnread}" name="channel_unread">
                                                                     <span class="inline-flex absolute top-0 right-0 w-[20px] h-full bg-sky-400 rounded-full opacity-100 animate-ping hidden"></span>
-                                                                        <span class="flex inline-flex absolute right-0 justify-center items-center p-2 w-[20px] h-[20px] bg-[#5E93DA] rounded-full"><a class="text-sm">${getUnreadMessage}</a></span>
+                                                                        <span class="flex inline-flex absolute right-0 justify-center items-center p-2 w-[20px] h-[20px] bg-[#5E93DA] rounded-full"><a class="text-sm text-white">${getUnreadMessage}</a></span>
                                                                 </div>
                                                             </div>
                                                     </div>
@@ -857,7 +857,7 @@
                         <button @click="openedMenu = 'Chat'"
                             x-bind:class="openedMenu === 'Chat' ? 'dark:bg-[#27272a] bg-white dark:bg-opacity-30' :
                                 'hover:dark:bg-[#27272a] hover:dark:bg-opacity-10 hover:bg-white hover:bg-opacity-30'"
-                            class="w-full border-b-0 border-gray-200 p-[5px] rounded-xl rounded-b-none dark:bg-[#27272a] bg-white dark:bg-opacity-30"><a
+                            class="w-full border-b-0 border-gray-200 p-[5px] rounded-xl rounded-b-none "><a
                                 class="text-black dark:text-gray-300">
                                 Private
                             </a>
@@ -865,7 +865,7 @@
                         <button @click="openedMenu = 'Group'"
                             x-bind:class="openedMenu === 'Group' ? 'dark:bg-[#27272a] bg-white dark:bg-opacity-30' :
                                 'hover:dark:bg-[#27272a] hover:dark:bg-opacity-10 hover:bg-white hover:bg-opacity-30'"
-                            class="w-full border-b-0 border-gray-200 p-[5px] rounded-xl rounded-b-none hover:dark:bg-[#27272a] hover:dark:bg-opacity-10 hover:bg-white hover:bg-opacity-30"><a
+                            class="w-full border-b-0 border-gray-200 p-[5px] rounded-xl rounded-b-none  "><a
                                 class="text-black dark:text-gray-300">
                                 Group
                             </a>
@@ -938,7 +938,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex relative flex-col w-full h-full" id="overview">
+        <div class="flex hidden relative flex-col w-full h-full" id="overview">
             <!-- Profile Header -->
             <div
                 class="flex items-center justify-between p-2 px-[35px] bg-[#f0f0f3] rounded-tr-xl border-b-[1px] dark:border-[#272729] border-gray-200 dark:bg-[#18181B]">

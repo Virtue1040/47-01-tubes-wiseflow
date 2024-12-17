@@ -79,7 +79,7 @@
         class="bg-[#ececec] dark:bg-[#09090B]">
         <div class="flex flex-col justify-center items-center w-screen h-screen">
             <div>
-                <div class="w-[200px] flex items-center mb-2 gap-[5px]">
+                <div class="w-[170px] flex items-center mb-2 gap-[5px]">
                     <button
                         x-bind:class="theme === 'light' ? 'dark:!bg-[#242427] !bg-gray-100' : ''"
                         @click="lightMode()" id="lightMode"

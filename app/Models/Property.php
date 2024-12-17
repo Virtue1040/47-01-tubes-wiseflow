@@ -130,6 +130,16 @@ class Property extends Model
         return true;
     }
 
+    public function getTotalAvailable() {
+        $rent = $this->rent()->where('availability', 1)->get();
+        return $rent->count();
+    }
+
+    public function getTotalRentStock() {
+        $rent = $this->rent()->get();
+        return $rent->sum('stock');
+    }
+
     public function getTotalUnTargetedIuran() {
         $total = 0;
         $iurans = $this->iuran()->get();

@@ -5,19 +5,19 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
-            {{ __($property->property_name) }}
+            {{ __('Iuran Management') }}
         </h2>
     </x-slot>
     <div class="flex flex-col gap-2 h-full">
         <div class="flex gap-4 justify-center">
             <div class="flex flex-col items-center p-4 w-60 bg-white rounded border-gray-300 shadow-md">
                 <h1 class="mb-2 text-xl font-bold">Jumlah Kamar</h1>
-                <x-icon.bedroom class="mb-2 w-8 h-8"></x-icon.bedroom>
+                <x-icon.bedroom p="32" l="32" class="mb-2 w-8 h-8"></x-icon.bedroom>
                 <h2 class="text-lg">20 Kamar</h2>
             </div>
             <div class="flex flex-col items-center p-4 w-60 bg-white rounded border border-gray-300 shadow-md">
                 <h1 class="mb-2 text-xl font-bold">Fasilitas</h1>
-                <x-icon.facility class="mb-2 w-8 h-8"></x-icon.facility>
+                <x-icon.facility p="32" l="32" class="mb-2"></x-icon.facility>
                 <h2 class="text-lg text-center">Wi-Fi, AC, Kamar Mandi Dalam</h2>
             </div>
         </div>

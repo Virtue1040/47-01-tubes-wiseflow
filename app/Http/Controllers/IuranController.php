@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateIuranRequest;
 use App\Models\Iuran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Property;
 
 
 class IuranController extends Controller
@@ -14,10 +15,11 @@ class IuranController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
         $iurans = Iuran::where('id_iuran', Auth::user()->id_iuran)->get();
-        return view('view.property.detail.iuran', ['iurans' => $iurans]);
+        $getProperty = Property::where('id_property', $id)->first();
+        return view('view.property.detail.iuran', ['iurans' => $iurans, 'property' => $getProperty]);
     }
 
     /**

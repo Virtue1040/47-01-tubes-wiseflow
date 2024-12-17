@@ -54,7 +54,7 @@
             } else {
                 $("#chatNotification").css('display', 'none');
             }
-            $("#chatNotification").find('p').html(unreadCounts['total_unread_count']);
+            $("#chatNotification").html(unreadCounts['total_unread_count']);
         }
         async function connectUser() {
             await client.connectUser({
