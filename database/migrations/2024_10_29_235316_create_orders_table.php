@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('id_item')->length(11);
             $table->integer('quantity')->length(11);
             $table->bigInteger('total_order');
+            $table->timestamps();
         });
 
         Schema::create('payments', function (Blueprint $table) {
@@ -35,6 +36,7 @@ return new class extends Migration
             $table->char('status_payment', 10);
             $table->char('type_payment', 20);
             $table->timestamp('payment_date');
+            $table->timestamps();
         });
     }
 

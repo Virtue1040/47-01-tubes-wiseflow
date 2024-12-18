@@ -8,32 +8,33 @@
     </x-slot>
     <script>
         $(document).ready(function() {
-            var options = {
-                series: [44, 55, 13, 43, 22],
-                chart: {
-                    width: '100%',
-                    type: 'pie',
-                    background: 'transparent'
-                },
-                theme: {
-                    mode: isDark ? 'dark' : 'light',
-                },
-                labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 200
-                        },
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }]
-            };
+            
+            // var options = {
+            //     series: [44, 55, 13, 43, 22],
+            //     chart: {
+            //         width: '100%',
+            //         type: 'pie',
+            //         background: 'transparent'
+            //     },
+            //     theme: {
+            //         mode: isDark ? 'dark' : 'light',
+            //     },
+            //     labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+            //     responsive: [{
+            //         breakpoint: 480,
+            //         options: {
+            //             chart: {
+            //                 width: 200
+            //             },
+            //             legend: {
+            //                 position: 'bottom'
+            //             }
+            //         }
+            //     }]
+            // };
 
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-            chart.render();
+            // var chart = new ApexCharts(document.querySelector("#chart"), options);
+            // chart.render();
 
         })
     </script>

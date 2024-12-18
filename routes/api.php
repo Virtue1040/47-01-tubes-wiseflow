@@ -34,6 +34,9 @@ Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () 
         ]);
     })->name('user.search');
 
+    //Payment Route
+    Route::get('api/payment/checkout', [PaymentController::class, 'store'])->name('payment.store');
+
     //Booking Route
     Route::get('api/booking', [BookingController::class, "get"])
         ->name('booking.get');
@@ -129,6 +132,8 @@ Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () 
     // Route for Property
     Route::get('api/property/{id}', [PropertyController::class, "getById"])
         ->name('property.getById');
+    Route::get('api/property/search/{category}', [PropertyController::class, "search"])
+        ->name('property.search');
     Route::get('api/property/byUserAll/{id}', [PropertyController::class, "getAllById"])
         ->name('property.get');
     Route::put('api/property/{id}', [PropertyController::class, "update"])

@@ -18,15 +18,175 @@
                 'full_name': 'Name',
                 'status': 'Status',
             }, {});
+
+            var optionsLine = {
+            chart: {
+                    height: 328,
+                    type: 'line',
+                    background: 'transparent',
+                zoom: {
+                    enabled: false
+                },
+                dropShadow: {
+                    enabled: true,
+                    top: 3,
+                    left: 2,
+                    blur: 4,
+                    opacity: 1,
+                }
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
+            //colors: ["#3F51B5", '#2196F3'],
+            series: [{
+                name: "Music",
+                data: [1, 15, 26, 20, 33, 27]
+                },
+                {
+                name: "Photos",
+                data: [3, 33, 21, 42, 19, 32]
+                },
+                {
+                name: "Files",
+                data: [0, 39, 52, 11, 29, 43]
+                }
+            ],
+            title: {
+                text: 'Media',
+                align: 'left',
+                offsetY: 25,
+                offsetX: 20
+            },
+            subtitle: {
+                text: 'Statistics',
+                offsetY: 55,
+                offsetX: 20
+            },
+            theme: {
+                    mode: isDark ? 'dark' : 'light',
+                },
+            markers: {
+                size: 6,
+                strokeWidth: 0,
+                hover: {
+                size: 9
+                }
+            },
+            grid: {
+                show: true,
+                padding: {
+                bottom: 0
+                }
+            },
+            labels: ['01/15/2002', '01/16/2002', '01/17/2002', '01/18/2002', '01/19/2002', '01/20/2002'],
+            xaxis: {
+                tooltip: {
+                enabled: false
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'right',
+                offsetY: -20
+            }
+            }
+
+            var chartLine = new ApexCharts(document.querySelector('#chart5MostProfit'), optionsLine);
+            chartLine.render();
+
+            var options = {
+                series: [{
+                name: 'Net Profit',
+                data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                }, {
+                name: 'Revenue',
+                data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+                }, {
+                name: 'Free Cash Flow',
+                data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                }],
+                theme: {
+                    mode: isDark ? 'dark' : 'light',
+                },
+                chart: {
+                type: 'bar',
+                height: 350,
+                background: 'transparent',
+                },
+                plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    borderRadius: 5,
+                    borderRadiusApplication: 'end'
+                },
+                },
+                dataLabels: {
+                enabled: false
+                },
+                stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+                },
+                xaxis: {
+                categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                },
+                yaxis: {
+                title: {
+                    text: '$ (thousands)'
+                }
+                },
+                fill: {
+                opacity: 1
+                },
+                tooltip: {
+                y: {
+                    formatter: function (val) {
+                    return "$ " + val + " thousands"
+                    }
+                }
+                }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chart5MostBooked"), options);
+                chart.render();
+
+            var options = {
+                series: [44, 55, 41, 17, 15],
+                chart: {
+                    type: 'donut',
+                    background: 'transparent',
+                },
+                theme: {
+                    mode: isDark ? 'dark' : 'light',
+                },
+                responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                    width: 200
+                    },
+                    legend: {
+                    position: 'bottom'
+                    }
+                }
+                }]
+            };
+
+            var chart = new ApexCharts(document.querySelector("#chart5MostRated"), options);
+            chart.render();
         })
     </script>
     <div class="flex gap-[25px] p-6 flex-col lg:flex-row">
         <div class="flex flex-col gap-[25px] w-full">
-            <div class="flex gap-[24px]">
-                <div class="flex flex-col gap-[24px]">
-                    <div class="flex lg:flex-row flex-col gap-[24px]">
+            <div class="flex gap-[24px] flex-col lg:flex-row ">
+                <div class="flex flex-col gap-[24px] ">
+                    <div class="flex 2xl:flex-row flex-col gap-[24px]">
                         <!-- Property Detail -->
-                        <x-box-dropdown class="w-[100%] lg:w-[70%]" name="Property Detail">
+                        <x-box-dropdown class="w-[100%] 2xl:w-[70%]" name="Property Detail">
                             <div class="flex gap-[25px]">
                                 <img src="{{ asset('storage/' . $property->album->imagePath) }}" alt="Cover Property"
                                     class="object-cover w-[200px] rounded-2xl h-[200px]">
@@ -44,7 +204,7 @@
                                 </div>
                             </div>
                         </x-box-dropdown>
-                        <x-box-dropdown class="w-[100%] lg:w-[30%]" name="Reviews">
+                        <x-box-dropdown class="w-[100%] 2xl:w-[30%]" name="Reviews">
                             <div
                                 class="overflow-y-auto [&::-webkit-scrollbar]:w-2
                             [&::-webkit-scrollbar-track]:rounded-full
@@ -129,38 +289,38 @@
 
                     </div>
                 </div>
-                <x-box-dropdown class="w-[250px]" name="Manage">
-                    <div class="flex justify-center items-center w-full h-full">
-                        <div class="flex flex-wrap  gap-[10px]">
+                <x-box-dropdown class="w-full lg:w-[250px] lg:h-full h-[300px]" name="Manage">
+                    <div class="w-full h-full">
+                        <div class="flex lg:flex-row flex-row flex-wrap  gap-[10px]">
                             <a href="{{ route('property.detail.calendar', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.calendar
-                                        p="28" l="28" />Calendar</x-primary-button>
+                                        p="28" l="28" class="!fill-white"/>Calendar</x-primary-button>
                             </a>
                             <a href="{{ route('property.detail.rent.overview', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.rent p="28"
-                                        l="28" />Rents</x-primary-button>
+                                        l="28" class="!fill-white"/>Rents</x-primary-button>
                             </a>
                             <a href="{{ route('property.detail.task', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.task p="28"
-                                        l="28" />Tasks</x-primary-button>
+                                        l="28" class="!fill-white"/>Tasks</x-primary-button>
                             </a>
                             <a href="{{ route('property.detail.transaction', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center  gap-[10px]"><x-icon.transaction
-                                        p="28" l="28" />Transactions</x-primary-button>
+                                        p="28" l="28" class="!fill-white"/>Transactions</x-primary-button>
                             </a>
                             <a href="{{ route('property.detail.reservation', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.booking
-                                        p="28" l="28" />Reservations</x-primary-button>
+                                        p="28" l="28" class="!fill-white"/>Reservations</x-primary-button>
                             </a>
                             <a href="{{ route('property.detail.iuran', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.iuran p="28"
-                                        l="28" />Iurans</x-primary-button>
+                                        l="28" class="!fill-white"/>Iurans</x-primary-button>
                             </a>
                         </div>
                     </div>
@@ -184,9 +344,9 @@
                                 <div
                                     class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
                                     <div class="-rotate-90">
-                                        <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
+                                        <x-icon.arrow-right p="20" l="20" class="fill-green-700"></x-icon.arrow-right>
                                     </div>
-                                    <a>{{ $property->getPrecentageOfBookingLastWeek() }}%</a>
+                                    <a class="text-white">{{ $property->getPrecentageOfBookingLastWeek() }}%</a>
                                 </div>
                                 <x-a-label>than last week</x-a-label>
                             </div>
@@ -207,7 +367,7 @@
                                     <div class="-rotate-90">
                                         <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
                                     </div>
-                                    <a>{{ $property->getPrecentageOfResidentLastWeek() }}%</a>
+                                    <a  class="text-white">{{ $property->getPrecentageOfResidentLastWeek() }}%</a>
                                 </div>
                                 <x-a-label>than last week</x-a-label>
                             </div>
@@ -228,7 +388,7 @@
                                     <div class="-rotate-90">
                                         <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
                                     </div>
-                                    <a>{{ $property->getPrecentageOfBookingLastWeek() }}%</a>
+                                    <a  class="text-white">{{ $property->getPrecentageOfBookingLastWeek() }}%</a>
                                 </div>
                                 <x-a-label>than last week</x-a-label>
                             </div>
@@ -249,7 +409,7 @@
                                     <div class="-rotate-90">
                                         <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
                                     </div>
-                                    <a>{{ $property->getPrecentageOfBookingLastWeek() }}%</a>
+                                    <a  class="text-white">{{ $property->getPrecentageOfBookingLastWeek() }}%</a>
                                 </div>
                                 <x-a-label>than last week</x-a-label>
                             </div>
@@ -260,8 +420,25 @@
 
              <!-- Rent Statistic -->
             <div class="w-full">
-                <x-a-label class="text-lg font-bold">Rent Overall Statistic</x-a-label><br><br>
-                <x-card.list-item id="guest-list" />
+                <x-a-label class="text-lg font-bold">Rent Statistic</x-a-label><br><br>
+                <!-- Statistic Most Profit -->
+                <div class="flex xl:flex-row flex-col gap-[25px] w-full">
+                    <x-box-dropdown class="w-full" name="5 Most Profit">
+                        <div id="chart5MostProfit">
+    
+                        </div>
+                    </x-box-dropdown>
+                    <x-box-dropdown class="w-full" name="5 Most Booked">
+                        <div id="chart5MostBooked">
+    
+                        </div>
+                    </x-box-dropdown>
+                    <x-box-dropdown class="w-full" name="5 Most Rated">
+                        <div id="chart5MostRated">
+    
+                        </div>
+                    </x-box-dropdown>
+                </div>
             </div>
 
             <!-- Daftar Penghuni -->

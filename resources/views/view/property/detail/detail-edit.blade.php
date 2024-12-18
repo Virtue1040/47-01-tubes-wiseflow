@@ -1,3 +1,4 @@
+@section('property_id', $property->id_property)
 @section('title', '- Property Edit')
 
 <x-app-layout>

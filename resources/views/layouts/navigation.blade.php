@@ -65,6 +65,19 @@
                                     <p>{{ __('Detail') }}</p>
                                 </div>
                             </x-nav-div>
+                            @if (request()->routeIs('property.edit'))
+                                <x-nav-div :href="route('property.edit', $property_id)" :active="request()->routeIs('property.edit')" class="relative w-full">
+                                    <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
+                                        <x-icon.set p="20" l="20" :active="request()->routeIs('property.edit')"></x-icon.property>
+                                        <p>{{ __('Edit Property') }}</p>
+                                    </div>
+                                    <div class="dark:bg-[#464649] bg-gray-200  w-[1px] h-[calc(100%+10px)] absolute left-[47px] top-1/2 -translate-y-1/2">
+                                        <div class="dark:bg-[#464649] bg-gray-200  w-[10px] h-[1px] absolute left-0 top-1/2 -translate-y-1/2">
+    
+                                        </div>
+                                    </div>
+                                </x-nav-div>   
+                            @endif 
                             <x-nav-div :href="route('property.detail.calendar', $property_id)" :active="request()->routeIs('property.detail.calendar')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
                                     <x-icon.calendar p="20" l="20" :active="request()->routeIs('property.detail.calendar')"></x-icon.calendar>
