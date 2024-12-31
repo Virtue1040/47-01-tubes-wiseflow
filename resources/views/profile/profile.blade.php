@@ -1,15 +1,5 @@
 @section('title', '- ' . $user->contactInformation->first_name . ' ' . $user->contactInformation->last_name . ' Profile')
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-    <script>
-        $('#contentContainer').css('padding', '0px');
-        $('#contentContainer').css('display', 'flex');
-    </script>
-
     @php
         function formatNumber($number) {
             if (!is_numeric($number)) {
@@ -29,6 +19,15 @@
             return $formatted . $suffixes[$index];
         }
     @endphp
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+            {{ __('Profile') }}
+        </h2>
+    </x-slot>
+    <script>
+        $('#contentContainer').css('padding', '0px');
+        $('#contentContainer').css('display', 'flex');
+    </script>
 
     <div class="flex sticky top-0 h-full w-fit">
         <div class="flex float-left flex-col gap-2 h-full">
@@ -106,7 +105,7 @@
                 <x-a-label class="truncate text-md text-wrap">{{ $user->contactInformation->description }}</x-a-label>
             </x-box-dropdown>
         </div>
-        <div class="flex gap-[20px] h-auto">
+        <div class="flex gap-[20px] h-auto pb-6">
             @if (count($user->getProperty) > 0)
                 <x-box-dropdown class="flex flex-col w-full gap-[20px]" name='null'>
                     <x-a-label class="text-xl font-bold">Property</x-a-label>
@@ -179,21 +178,21 @@
                                 </div>
                                 <div class="flex w-full justify-between gap-[15px] items-center p-3 bg-gray-100 h-[40px] dark:bg-[#09090B] dark:bg-opacity-50 rounded-b-2xl">
                                     <div>
-                                        <x-a-label class="text-sm !text-gray-400">Added 5 Sep, 2024</x-a-label>
+                                        <x-a-label class="text-sm !text-gray-400">Added {{ date("d M, Y", strtotime($property->created_at)) }}</x-a-label>
                                     </div>
-                                    <div class="hover:bg-gray-100 dark:hover:bg-[#FAFAFA] dark:hover:bg-opacity-10 rounded-xl p-1 cursor-pointer px-2">
+                                    <button onclick="window.location.href='{{ route('property.profile', $property->id_property) }}'" class="hover:bg-gray-100 dark:hover:bg-[#FAFAFA] dark:hover:bg-opacity-10 rounded-xl p-1 cursor-pointer px-2">
                                         <div class=" flex gap-[10px]">
                                             <x-icon.eye p="20" l="20"/>
                                             <x-a-label class="text-sm">Show Details</x-a-label>
                                         </div>
-                                    </div>
+                                    </button>  
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </x-box-dropdown>
-        @endif
-                <div class="@if (count($user->getProperty) <= 0))
+            @endif
+            <div class="@if (count($user->getProperty) <= 0))
                 w-[100%]
                 @else
                 w-[40%]

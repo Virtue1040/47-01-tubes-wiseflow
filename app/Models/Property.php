@@ -60,6 +60,19 @@ class Property extends Model
         return $this->hasOne(Property_Address::class, "id_property", "id_property");
     }
 
+    public function getLocation(){
+        $getAddress = $this->property_address()->first();
+        return $getAddress->street_name . ", " . $getAddress->province . ", " . $getAddress->zipcode . ", " . $getAddress->country;
+    }
+
+    public function getLongLat() {
+        $getAddress = $this->property_address()->first();
+        return [
+            'long' => $getAddress->longitude,
+            'lat' => $getAddress->latitude
+        ];
+    }
+
     public function property_contact() {
         return $this->hasOne(Property_Contact::class, "id_property", "id_property");
     }

@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                             </x-nav-div>
-                            <x-nav-div :href="route('property.detail.transaction', $property_id)" :active="request()->routeIs('property.detail.transaction')" class="relative w-full">
+                            {{-- <x-nav-div :href="route('property.detail.transaction', $property_id)" :active="request()->routeIs('property.detail.transaction')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
                                     <x-icon.transaction p="20" l="20" :active="request()->routeIs('property.detail.transaction')"></x-icon.transaction>
                                     <p>{{ __('Transactions') }}</p>
@@ -121,7 +121,7 @@
 
                                     </div>
                                 </div>
-                            </x-nav-div>
+                            </x-nav-div> --}}
                             <x-nav-div :href="route('property.detail.reservation', $property_id)" :active="request()->routeIs('property.detail.reservation')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
                                     <x-icon.booking p="20" l="20" :active="request()->routeIs('property.detail.reservation')"></x-icon.booking>

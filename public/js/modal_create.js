@@ -52,7 +52,10 @@ function init_create_modal(name, stepArray, stepContainer, validator, property) 
             });
 
             function checkingValidateByName() {
-                if (validator[step] === undefined) { return; }
+                if (validator[step] === undefined) { 
+                    buttonContinue.prop("disabled", false);
+                    return; 
+                }
                 let counter = 0;
                 let length = validator[step].length;
                 for (let x = 1; x <= validator[step].length; x++) {

@@ -1,13 +1,12 @@
 <x-app-layout>
     <script>
         let oldInput = @json(old()); 
-        let createPropertyBounced = false;
         $(document).ready(function() {
             if (oldInput['form_name'] === "property_create") { createProperty(); }
         })
         function createProperty() {
-            if (createPropertyBounced) { return; }
-            createPropertyBounced = true;
+            if (createBounced) { return; }
+            createBounced = true;
             let returns = init_create_modal("property_create", [
                 {
                     icon: 'detail',
@@ -124,7 +123,7 @@
                 lastButton: "Create Property",
                 onCreate: function() {
                     
-                    createPropertyBounced = false;
+                    createBounced = false;
                 },
             })
         }

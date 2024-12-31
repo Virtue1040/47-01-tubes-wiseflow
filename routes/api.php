@@ -40,8 +40,12 @@ Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () 
     //Booking Route
     Route::get('api/booking', [BookingController::class, "get"])
         ->name('booking.get');
+    Route::post('api/booking', [BookingController::class, "store"])
+        ->name('booking.store');
     Route::get('api/booking/getAll', [BookingController::class, "getAll"])
         ->name('booking.getAll');
+    Route::get('api/callback', [BookingController::class, "callback"])
+        ->name('callback');
 
     //Chat route
     Route::post('api/chat/generate-token', [CommunicationController::class, 'generateToken'])->name('chat.token');

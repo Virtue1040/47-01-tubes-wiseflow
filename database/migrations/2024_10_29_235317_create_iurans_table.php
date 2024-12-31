@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('id_property')->references('id_property')->on('property')->onDelete('cascade');;
             $table->char('type_iuran', 20);
             $table->integer('nominal_iuran')->length(11);
-            $table->integer('orderNumber')->length(11);
+            $table->string('orderNumber');
             $table->foreign('orderNumber')->references('orderNumber')->on('orders')->onDelete('cascade');
             $table->char('status', 20);
             $table->timestamp('tanggal_iuran');

@@ -6,8 +6,7 @@
         </h2>
     </x-slot>
     <script>
-        $('#contentContainer').css('padding', '0px');
-        $("#contentContainer").css("display", 'flex');
+flex flex-col gap-[25px] 
         $("#contentContainer").css("overflow", 'hidden');
     </script>
     <script>
@@ -939,7 +938,6 @@
             </div>
         </div>
         <div class="flex hidden relative flex-col w-full h-full" id="overview">
-            <!-- Profile Header -->
             <div
                 class="flex items-center justify-between p-2 px-[35px] bg-[#f0f0f3] rounded-tr-xl border-b-[1px] dark:border-[#272729] border-gray-200 dark:bg-[#18181B]">
                 <div class="flex items-center gap-[15px] cursor-pointer">

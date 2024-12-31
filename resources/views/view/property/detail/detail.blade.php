@@ -1,7 +1,25 @@
 @section('property_name', $property->property_name)
 @section('property_id', $property->id_property)
 @section('title', '- Property Detail')
+@php
+        function formatNumber($number) {
+            if (!is_numeric($number)) {
+                return "Invalid number";
+            }
 
+            $suffixes = ['', 'K', 'M', 'B', 'T'];
+            $index = 0;
+
+            while ($number >= 1000 && $index < count($suffixes) - 1) {
+                $number /= 1000;
+                $index++;
+            }
+
+            $formatted = ($index === 0) ? $number : number_format($number, 1);
+
+            return $formatted . $suffixes[$index];
+        }
+    @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
@@ -286,7 +304,14 @@
                                 <x-a-label class="text-lg truncate">{{ $property->getTotalRentStock() }} Stock</x-a-label>
                             </div>
                         </x-box-dropdown>
-
+                        <x-box-dropdown class="col-span-2" name="Property Bank">
+                            <div class="mb-4 w-12 h-12 text-gray-700">
+                                <x-icon.money p="48" l="48" />
+                            </div>
+                            <div class="flex w-full">
+                                <x-a-label class="text-lg truncate">IDR {{ formatNumber($property->property_bank) }}</x-a-label>
+                            </div>
+                        </x-box-dropdown>
                     </div>
                 </div>
                 <x-box-dropdown class="w-full lg:w-[250px] lg:h-full h-[300px]" name="Manage">

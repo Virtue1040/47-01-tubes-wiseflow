@@ -38,7 +38,7 @@ class RentController extends Controller
 
     public function getById($id)
     {
-        $rent = Rent::where('id_rent', $id)->get();
+        $rent = Rent::where('id_rent', $id)->with("getRentTag")->with("album")->first();
         return response()->json([
             "success" => true,
             "message" => "Berhasil mengambil data Rent",

@@ -87,27 +87,6 @@
 
     </div>
 
-    <div class="flex justify-center py-10">
-        <div class="grid grid-cols gap-8 md:grid-cols-4 px-[25px]">
-            <div>
-                <img src="{{ asset('img/house-thailand.jpg  ') }}" class=""></img>
-            </div>
-
-            <div>
-                <img src="{{ asset('img/hause-japan.jpg  ') }}" class=""></img>
-            </div>
-
-            <div>
-                <img src="{{ asset('img/hause-europ.jpg  ') }}" class=""></img>
-            </div>
-
-            <div>
-                <img src="{{ asset('img/hause-esthethic.jpg  ') }}" class=""></img>
-            </div>
-
-        </div>
-    </div>
-
 
 
     <div class="mt-20 bg-gray-50">
@@ -144,6 +123,7 @@
     <!-- Main Section -->
     <div class="bg-[#f5f7f7]">
         <h1 class="flex justify-center pt-10 text-5xl">Our services</h1>
+        <br><br>
         <section class="flex justify-center">
             <div class="grid grid-cols gap-1 md:grid-cols-4 px-[25px] pb-11">
                 <!-- Cards -->
@@ -180,6 +160,7 @@
                 </div>
             </div>
         </section>
+        <br><br>
     </div>
 
     <!-- Footer -->

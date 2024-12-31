@@ -915,6 +915,7 @@
                         askSave(false);
                     })
 
+                    $("#renttagbox").val("");
                     askSave(true);
                 }
 

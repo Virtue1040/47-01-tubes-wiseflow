@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
 
@@ -30,6 +32,10 @@
     <script src={{ asset('js/handle_theme.js') }}></script>
     <script src="{{ asset('js/tinymce/tinymce.js') }}" referrerpolicy="origin"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src={{ asset('js/modernizr.js')}}></script>
+    <script src={{ asset("js/snap.svg-min.js")}}></script>
+    <script src={{ asset("js/main.js")}}></script> 
+    <script src={{ asset("js/jquery.mobile.custom.min.js") }}></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.min.js"></script>

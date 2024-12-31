@@ -140,6 +140,13 @@ class PropertyController extends Controller
         ], 200);
     }
 
+    public function profile($id) {
+        $property = Property::find($id)->with('album')->first();
+        return view("view.property.property-page", [
+            'property' => $property,
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

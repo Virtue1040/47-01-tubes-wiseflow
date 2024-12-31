@@ -10,115 +10,101 @@
     <body class="font-sans bg-gray-100">
         <!-- Header -->
         <header class="py-4 text-black">
-          <div class="container flex justify-between items-center px-4 mx-auto">
-            <h1 class="text-xl font-bold">Hello, Resident!</h1>
-            
-          </div>
+            <div class="container flex justify-between items-center px-4 mx-auto">
+                <h1 class="text-xl font-bold">Hello, Resident!</h1>
+
+            </div>
         </header>
-      
+
+
+
         <!-- Main Content -->
         <main class="container px-4 mx-auto mt-6">
-          <!-- Overview Cards -->
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <!-- Card: Billing Status -->
-            <div class="p-6 bg-white rounded-lg shadow-md">
-              <h2 class="text-xl font-bold text-gray-700">Billing Status</h2>
-              <p class="mt-4 text-4xl font-bold text-red-600">Unpaid</p>
-              <p class="mt-2 text-gray-500">Due Date: December 15, 2024</p>
-              <button class="px-4 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-500">
-                Pay Now
-              </button>
+
+            <div class="mt-6">
+                {{-- <h2 class="text-2xl font-bold text-gray-700">Monthly Payment Statistics</h2> --}}
+                <div class="">
+                  <img src="{{ asset('img/iklan AI.webp  ') }}" class="rounded-md"></img>
+                    {{-- <canvas id="paymentChart"></canvas> --}}
+                </div>
             </div>
-      
-            <!-- Card: Cleaning Tasks -->
-            <div class="p-6 bg-white rounded-lg shadow-md">
-              <h2 class="text-xl font-bold text-gray-700">Cleaning Tasks</h2>
-              <p class="mt-4 text-lg text-gray-700">Bathroom Cleaning</p>
-              <p class="mt-2 text-gray-500">Deadline: December 12, 2024</p>
-              <button class="px-4 py-2 mt-4 text-white bg-green-600 rounded-lg hover:bg-green-500">
-                Mark as Done
-              </button>
+
+            <div class="flex justify-center py-10">
+                <div class="grid grid-cols gap-8 md:grid-cols-4 px-[5px]">
+                    <div>
+                        <img src="{{ asset('img/house-thailand.jpg  ') }}" class=""></img>
+                    </div>
+        
+                    <div>
+                        <img src="{{ asset('img/hause-japan.jpg  ') }}" class=""></img>
+                    </div>
+        
+                    <div>
+                        <img src="{{ asset('img/hause-europ.jpg  ') }}" class=""></img>
+                    </div>
+        
+                    <div>
+                        <img src="{{ asset('img/hause-esthethic.jpg  ') }}" class=""></img>
+                    </div>
+        
+                </div>
             </div>
-      
-            <!-- Card: Notifications -->
-            <div class="p-6 bg-white rounded-lg shadow-md">
-              <h2 class="text-xl font-bold text-gray-700">Notifications</h2>
-              <ul class="mt-4 space-y-2 text-gray-600">
-                <li>📢 Electrical maintenance on December 14, 2024.</li>
-                <li>📢 Resident meeting: December 16, 2024, at 7:00 PM.</li>
-              </ul>
+
+            <div class="flex flex-row gap-8 mt-8">
+                <x-a-label class="font-bold !text-black text-2xl">Popular of the week</x-a-label>
+                {{-- <x-a-label class="" id="itemResult !text-gray-400">0 Result</x-a-label> --}}
             </div>
-          </div>
-      
-          <!-- Statistics Section -->
-          <div class="mt-8">
-            <h2 class="text-2xl font-bold text-gray-700">Monthly Payment Statistics</h2>
-            <div class="p-6 mt-4 bg-white rounded-lg shadow-md">
-              <canvas id="paymentChart"></canvas>
+            <!-- Overview Cards -->
+            <div class="grid grid-cols-1 gap-4 mt-4 md:grid-cols-4">
+                <!-- Card: Billing Status -->
+                <div class="p-3 bg-white rounded-xl shadow-md">
+                    <img src="{{ asset('img/house-thailand.jpg  ') }}" class="rounded-md"></img>
+                    <br>
+                    <div class="flex justify-between">
+                        <h2 class="text-xl font-bold text-gray-700">Hotel Horison</h2>
+                        <h2 class="text-xl font-bold text-gray-700">IDR 2000,000</h2>
+                    </div>
+                    <p class="mt-2 text-gray-500">Bandung,Jawa Barat</p>
+                </div>
+
+                <!-- Card: Cleaning Tasks -->
+                <div class="p-3 bg-white rounded-xl shadow-md">
+                    <img src="{{ asset('img/hause-japan.jpg  ') }}" class="rounded-md"></img>
+                    <br>
+                    <div class="flex justify-between">
+                        <h2 class="text-xl font-bold text-gray-700">Hotel Horison</h2>
+                        <h2 class="text-xl font-bold text-gray-700">IDR 2000,000</h2>
+                    </div>
+                    <p class="mt-2 text-gray-500">Bandung,Jawa Barat</p>
+                </div>
+
+
+                <!-- Card: Notifications -->
+                <div class="p-3 bg-white rounded-xl shadow-md">
+                    <img src="{{ asset('img/hause-europ.jpg  ') }}" class="rounded-md"></img>
+                    <br>
+                    <div class="flex justify-between">
+                        <h2 class="text-xl font-bold text-gray-700">Hotel Horison</h2>
+                        <h2 class="text-xl font-bold text-gray-700">IDR 2000,000</h2>
+                    </div>
+                    <p class="mt-2 text-gray-500">Bandung,Jawa Barat</p>
+                </div>
+
+
+                <div class="p-3 bg-white rounded-xl shadow-md">
+                    <img src="{{ asset('img/hause-esthethic.jpg  ') }}" class="rounded-md"></img>
+                    <br>
+                    <div class="flex justify-between">
+                        <h2 class="text-xl font-bold text-gray-700">Hotel Horison</h2>
+                        <h2 class="text-xl font-bold text-gray-700">IDR 2000,000</h2>
+                    </div>
+                    <p class="mt-2 text-gray-500">Bandung,Jawa Barat</p>
+                </div>
             </div>
-          </div>
+
+            <!-- Statistics Section -->
+
         </main>
-      
-        <!-- Footer -->
-        {{-- <footer class="py-4 mt-10 text-white bg-gray-800">
-          <div class="container mx-auto text-center">
-            <p>&copy; 2024 Kos Management. All rights reserved.</p>
-          </div>
-        </footer> --}}
-      
-        <!-- Script for Chart -->
-        <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            const ctx = document.getElementById('paymentChart').getContext('2d');
-            const paymentData = {
-              labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-              datasets: [{
-                label: 'Monthly Payment (IDR)',
-                data: [500000, 450000, 600000, 550000, 500000, 470000],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-              }]
-            };
-      
-            const config = {
-              type: 'bar',
-              data: paymentData,
-              options: {
-                responsive: true,
-                plugins: {
-                  legend: {
-                    display: true,
-                    position: 'top',
-                  },
-                  tooltip: {
-                    callbacks: {
-                      label: function (context) {
-                        return `IDR ${context.raw.toLocaleString()}`;
-                      }
-                    }
-                  }
-                },
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    title: {
-                      display: true,
-                      text: 'Amount (IDR)'
-                    }
-                  },
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Month'
-                    }
-                  }
-                }
-              }
-            };
-      
-            new Chart(ctx, config);
-          });
-        </script>
-      </body>
+
+    </body>
 </x-app-layout>

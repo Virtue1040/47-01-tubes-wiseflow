@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('id_property')->references('id_property')->on('property')->onDelete('cascade');
             $table->integer('id_rent')->length(11);
             $table->foreign('id_rent')->references('id_rent')->on('rents')->onDelete('cascade');    
-            $table->integer('orderNumber')->length(11);
+            $table->string('orderNumber');
             $table->foreign('orderNumber')->references('orderNumber')->on('orders')->onDelete('cascade');
             $table->char('status')->length(10);
             $table->timestamp('checkin');

@@ -93,6 +93,8 @@ Route::group(['middleware' => ['auth', 'hasRole']], function() {
         ->name('dashboard');
     Route::get('view/property', [PropertyController::class, "index"])
         ->name('property');
+    Route::get('view/property/profile/{id}', [PropertyController::class, "profile"])
+        ->name('property.profile');
     Route::get('view/home', [HomeController::class, "index"])
         ->name('home');
     Route::get('view/contact', [ContactController::class, "index"])

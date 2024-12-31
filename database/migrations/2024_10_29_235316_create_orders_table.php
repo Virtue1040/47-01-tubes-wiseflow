@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->integer('orderNumber')->length(11)->primary();
+            $table->string('orderNumber')->primary();
             $table->integer('id_user')->length(11);
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');;
             $table->timestamps();
         });
 
         Schema::create('orderdetails', function (Blueprint $table) {
-            $table->id('orderNumber');
+            $table->string('orderNumber')->primary();
             $table->char('checkNumber', 50)->unique();
             $table->char('status', 10);
             $table->char('type_order', 20);
@@ -30,7 +30,7 @@ return new class extends Migration
         });
 
         Schema::create('payments', function (Blueprint $table) {
-            $table->char('checkNumber', 50)->primary();
+            $table->string('checkNumber')->primary();
             $table->char('id_transaction', 50)->unique();
             $table->bigInteger('nominal');
             $table->char('status_payment', 10);

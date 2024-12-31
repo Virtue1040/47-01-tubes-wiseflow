@@ -77,6 +77,11 @@
                                 .setHTML(
                                     `<x-box-dropdown :disableDropdown=true class="">
                                         <img src="{{ asset('storage/') }}/${property.cover}" onerror="$(this).attr('src', '{{ asset('img/placeholder.png') }}')" alt="Cover Property" class="object-cover w-full h-full rounded-xl">
+                                        <br>
+                                        <x-a-label class="text-lg font-bold">${property.property_name}</x-a-label><br>
+                                        <x-a-label class="text-md">${property.property_category}</x-a-label>
+                                        <br><br>
+                                        <x-primary-button onclick="window.location.href='/view/property/profile/${property.id_property}'" class="flex justify-center w-full">View Detail</x-primary-button>
                                     </x-box-dropdown>`
                                 );
                                 marker.setPopup(popup);
