@@ -1,3 +1,4 @@
+@section('title', '- All Transaction')
 <x-app-layout>
     <script>
         $(document).ready(function() {

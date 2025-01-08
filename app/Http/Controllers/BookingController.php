@@ -75,14 +75,14 @@ class BookingController extends Controller
             return response()->json([
                 "success" => false,
                 "message" => "Rumah tidak tersedia",
-            ], 400);
+            ], 200);
         }
         $getResident = Resident::where('id_rent', $request->id_rent)->count();
         if ($getResident >= $getRent->stock) {
             return response()->json([
                 "success" => false,
                 "message" => "Stock sudah penuh",
-            ], 400);
+            ], 200);
         }
 
         $checkIn = new DateTime($request->checkin_date);

@@ -1,3 +1,4 @@
+@section('title', '- My Booking')
 <x-app-layout>
     <script>
         function rateRent(id_booking) {

@@ -48,7 +48,7 @@ class StreamChatService
         return $channels;
     }
 
-    public function createChannel($channeltype = 'messaging', $members, $name = 'General')
+    public function createChannel($channeltype = 'messaging', $members, $name = 'General', $id)
     {
         $addChannelPrefix = '-04-';
         if ($channeltype === 'messaging') {
@@ -57,14 +57,18 @@ class StreamChatService
             }
             $channelId = $members[0] . $addChannelPrefix . $members[1];
         } else {
-            $channelId = uniqid($channeltype . '-' . $members[0]);
+            $channelId = $channeltype . '-property-' . $id;
         }
         $exists = $this->client->queryChannels([
             'id' => $channelId,
         ]); 
         if (count($exists['channels']) > 0) {
             $channel = $this->client->channel($channeltype, $channelId);
-            $channel->addMembers([strval(Auth::user()->id_user)]);
+            if ($channeltype === 'messaging') {
+                $channel->addMembers([strval(Auth::user()->id_user)]);
+            } else {
+                $channel->addMembers([$members[0]]);
+            }
         } else {
             if ($channeltype === 'messaging') {
                 $exists = $this->client->queryChannels([
@@ -86,6 +90,7 @@ class StreamChatService
                     $channel->create($members[0]);
                 }
             } else {
+
                 $data = [
                     'name' => $name,
                     'members' => $members,

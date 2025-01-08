@@ -1,3 +1,4 @@
+@section('title', '- All Booking')
 <x-app-layout>
     <script>
         $(document).ready(function() {

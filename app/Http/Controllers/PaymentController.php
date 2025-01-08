@@ -190,7 +190,7 @@ class PaymentController extends Controller
                             $channel = $this->streamChatService->createChannel(
                                 'team',
                                 [strval($booking->id_user)],
-                                $booking->property->property_name
+                                $booking->property->property_name, $booking->property->id_property
                             );
                             break;
                         case "iuran":

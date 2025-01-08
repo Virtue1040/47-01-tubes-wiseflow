@@ -1,7 +1,7 @@
 @section('property_name', $property->property_name)
 @section('property_rent', $property)
 @section('property_id', $property->id_property)
-
+@section('title', '- Property Detail')
 
 <x-app-layout>
     <script>

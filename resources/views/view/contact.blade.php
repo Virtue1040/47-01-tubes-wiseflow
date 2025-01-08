@@ -1,3 +1,4 @@
+@section('title', '- Contact Management')
 <x-app-layout>
     <script>
         $(document).ready(function() {

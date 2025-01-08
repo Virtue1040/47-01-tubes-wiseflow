@@ -1,3 +1,4 @@
+@section('title', '- Home')
 <x-app-layout>
     <script src="{{ asset('js/carousel.js') }}"></script>
     <style>
@@ -171,7 +172,9 @@
                 <div class="grid grid-cols-1 gap-4 px-6 mt-4 md:grid-cols-4">
                     @foreach ($property as $prop)
                         <div onclick="window.location.href='{{ route('property.profile', $prop->id_property) }}'" class="cursor-pointer p-3 bg-white dark:bg-[#18181B] rounded-xl shadow-md">
-                            <img src="{{ asset('storage/') }}/{{ $prop->cover }}" onerror="this.src='{{ asset('img/placeholder.png') }}'" class="rounded-md h-[200px]"></img>
+                            <div class="flex justify-center items-center w-full h-auto">
+                                <img src="{{ asset('storage/') }}/{{ $prop->cover }}" onerror="this.src='{{ asset('img/placeholder.png') }}'" class="rounded-md h-[200px]"></img>
+                            </div>
                             <br>
                             <div class="flex justify-between">
                                 <x-a-label class="text-xl font-bold">{{ $prop->property_name }}</x-a-label>

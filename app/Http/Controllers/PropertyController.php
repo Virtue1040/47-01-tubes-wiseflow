@@ -257,7 +257,7 @@ class PropertyController extends Controller
         $channel = $this->streamChatService->createChannel(
             'team',
             [strval(Auth::user()->id_user)],
-            $request->input('name', $request->property_name)
+            $request->input('name', $request->property_name), $property->id_property
         );
 
         if ($request->header('Accept') === 'application/json') {

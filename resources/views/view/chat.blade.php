@@ -58,7 +58,8 @@
                 online = activedUser[opponent.user.id] === true ? '' : 'hidden';
                 $('#openProfileLink').attr('href', getHost() + `/view/profile/${opponent.user.id}/overview`)
             } else {
-                $('#openProfileLink').attr('href', null)
+                let split = data.channel.id.split("-")
+                $('#openProfileLink').attr('href', getHost() + `/view/property/profile/${split[2]}`);
             }
             $("#channel-" + data.channel.id).append(`
                                                     <div class="relative">
@@ -635,25 +636,27 @@
                 Object.keys(activeChannel.channel.state.members).forEach(key => {
                     let getMember = activeChannel.channel.state.members[key];
                     let profile = $(`
+                    <a href="/view/profile/${getMember.user.id}/overview" class='p-1 rounded-lg dark:hover:bg-[#FAFAFA] dark:hover:bg-opacity-10 hover:bg-gray-100'>
                         <div class="h-[50px] mt-[2px] px-2 flex items-center gap-[10px]">
                             <div
                                 class="flex justify-center items-center rounded-full w-[35px] h-[35px] bg-white overflow-hidden">
                                 <img
-                                    onerror="let getFirst = $(this).attr('name'); $(this).parent().find('a').text(getFirst.charAt(0)); $(this).css('display', 'none')"
+                                    onerror="let getFirst = $(this).attr('name'); $(this).parent().find('p').text(getFirst.charAt(0)); $(this).css('display', 'none')"
                                     alt="Profile Image" class="" name="${getMember.user.name}" src="${getMember.user.image}">
-                                <a class="text-black"></a>
+                                <p class="text-black"></p>
                             </div>
                             <div class="flex flex-col truncate">
                                             <div class="flex gap-[5px] items-center">
-                                                <a class="text-sm text-black dark:text-gray-300">
+                                                <p class="text-sm text-black dark:text-gray-300">
     ${getMember.user.name}
-</a>
+</p>
                                             </div>
-                                            <a class="text-black dark:text-gray-300 text-xs !text-gray-500 w-full" id="chat_type">
+                                            <p class="text-black dark:text-gray-300 text-xs !text-gray-500 w-full" id="chat_type">
     ${toUpperCase(getMember.role)}
-</a>
+</p>
                                         </div>
                         </div>
+                    </a>
                     `);
                     $("#extended_info").append(profile)
                 });
@@ -841,13 +844,14 @@
                                 <a class="text-sm">+ Chat</a>
                             </div>
                         </button>
-                        <button
-                            class="disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center px-4 py-2 border-[1px] border-gray-200 bg-[#5E93DA] dark:bg-[#5E93DA] border border-transparent rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-[#315079] focus:bg-gray-700 dark:focus:bg-[#5E93DA] active:bg-gray-900 dark:active:bg-[#5E93DA] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 !rounded-full !bg-red-500 hover:!bg-red-600 !p-[8px] !py-[5px] !bg-opacity-90">
-                            <div class="flex relative justify-center items-center w-full h-full">
-                                <a class="text-sm" onclick="resetChannel();">Reset</a>
-                            </div>
-                        </button>
-
+                        @if (Auth::user()->hasRole('Admin'))
+                            <button
+                                class="disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center px-4 py-2 border-[1px] border-gray-200 bg-[#5E93DA] dark:bg-[#5E93DA] border border-transparent rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-[#315079] focus:bg-gray-700 dark:focus:bg-[#5E93DA] active:bg-gray-900 dark:active:bg-[#5E93DA] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 !rounded-full !bg-red-500 hover:!bg-red-600 !p-[8px] !py-[5px] !bg-opacity-90">
+                                <div class="flex relative justify-center items-center w-full h-full">
+                                    <a class="text-sm" onclick="resetChannel();">Reset</a>
+                                </div>
+                            </button>
+                        @endif
                     </div>
                 </h3>
                 <div class="flex flex-col h-full">

@@ -216,6 +216,7 @@
                             type: "POST",
                             data: data,
                             success: function(response) {
+  
                                 if (response.success) {
                                     checking.addClass('hidden');
                                     snapcontainer.removeClass('hidden');
@@ -246,7 +247,11 @@
                                     $("#snap-midtrans").css("width", "564px");
                                     $("#snap-midtrans").addClass("w-[564px]");
                                 } else {
-
+                                    Toast.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                    });
+                                    div.remove();
                                 }
                             }
                         })

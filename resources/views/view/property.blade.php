@@ -1,3 +1,4 @@
+@section('title', '- Property Management')
 <x-app-layout>
     <script>
         let oldInput = @json(old()); 
