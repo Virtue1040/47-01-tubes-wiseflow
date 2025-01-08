@@ -3,11 +3,21 @@
         $(document).ready(function() {
             handle_itemlist($('#booking-list'), 'booking/getAll',{
                 'orderNumber': 'Order Number',
-                'id_property': 'Property',
+                'property_name': 'Property',
+                'rent_name': 'Rent',
                 'status': 'Status',
                 'checkin': 'Check In',
                 'checkout': 'Check Out',
-            }, {});
+            }, {
+                "onStatusColor": function(itemData, object) {
+                    if (itemData.status === "paid") {
+                        object.find("p").css("background-color", "green");
+                    } else {
+                        object.find("p").css("background-color", "#F87171");
+                    }
+                    return object.prop("outerHTML");
+                },
+            });
         })
     </script>
     <x-slot name="header">

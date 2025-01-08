@@ -68,6 +68,10 @@ Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () 
     //Transaction Route
     Route::get('api/transaction', [PaymentController::class, "get"])
         ->name('transaction');
+    Route::get('api/transaction/{id}', [PaymentController::class, "getByProperty"])
+        ->name('transaction.getByProperty');
+    Route::get('api/transaction-iuran/{id}', [PaymentController::class, "iuran_getByProperty"])
+        ->name('transaction-iuran.getByProperty');
 
     //Chat route
     Route::post('api/chat/generate-token', [CommunicationController::class, 'generateToken'])->name('chat.token');

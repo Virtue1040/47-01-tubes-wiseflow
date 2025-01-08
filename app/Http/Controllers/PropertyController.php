@@ -283,6 +283,12 @@ class PropertyController extends Controller
         return view('view.property.detail.detail', ['property' => $getProperty]);
     }
 
+    public function showTransaction(Property $property, $id)
+    {
+        $getProperty = Property::where('id_property', $id)->first();
+        return view('view.property.detail.transaction', ['property' => $getProperty]);
+    }
+
     public function getGuests(Request $request, $id)
     {
         $limit = $request->maxPage;

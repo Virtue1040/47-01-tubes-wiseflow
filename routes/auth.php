@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'hasRole', 'hasProperty']], function() {
         ->name('property.detail.task');
     Route::get('view/property/{id}/calendar', [PropertyController::class, "showCalendar"])
         ->name('property.detail.calendar');
-    Route::get('view/property/{id}/transaction', [PropertyController::class, "showDetail"])
+    Route::get('view/property/{id}/transaction', [PropertyController::class, "showTransaction"])
         ->name('property.detail.transaction');
     Route::get('view/property/{id}/reservation', [PropertyController::class, "showDetail"])
         ->name('property.detail.reservation');

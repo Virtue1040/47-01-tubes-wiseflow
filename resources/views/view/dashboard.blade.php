@@ -181,6 +181,46 @@
                         </div>
                     </div>
                 </x-box-dropdown>
+                <!-- Jumlah Iuran -->
+                <x-box-dropdown name="Jumlah Iuran">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.transaction p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $iuran['object']->count() }} Iuran</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
+                                </div>
+                                <a>{{ $iuran['percent'] }}%</a>
+                            </div>
+                            <x-a-label>than last week</x-a-label>
+                        </div>
+                    </div>
+                </x-box-dropdown>
+                <!-- Jumlah Task -->
+                <x-box-dropdown name="Jumlah Task">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.calendar p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $task['object']->count() }} Task</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
+                                </div>
+                                <a>{{ $task['percent'] }}%</a>
+                            </div>
+                            <x-a-label>than last week</x-a-label>
+                        </div>
+                    </div>
+                </x-box-dropdown>
             </div>
         </div>
     </div>

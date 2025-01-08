@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Facility;
+use App\Models\Iuran;
 use App\Models\Order;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Property;
+use App\Models\task;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -54,6 +56,8 @@ class DashboardController extends Controller
         $facility = $this->getPercentage(Facility::class);
         $transaction = $this->getPercentage(Order::class);
         $booking = $this->getPercentage(Booking::class);
+        $iuran = $this->getPercentage(Iuran::class);
+        $task = $this->getPercentage(task::class);
         $owner = $this->getPercentage(User::class, function($models) {
             return $models->whereHas('roles', function ($query) {
                 $query->where('name', 'Owner');
@@ -93,6 +97,14 @@ class DashboardController extends Controller
             'booking' => [
                 'object' => $booking['all'],
                 'percent' => $booking['percent'],
+            ],
+            'iuran' => [
+                'object' => $iuran['all'],
+                'percent' => $iuran['percent'],
+            ],
+            'task' => [
+                'object' => $task['all'],
+                'percent' => $task['percent'],
             ],
         ]);
     }

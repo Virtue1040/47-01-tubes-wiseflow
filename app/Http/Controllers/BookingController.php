@@ -197,7 +197,21 @@ class BookingController extends Controller
         $filter = $request->search;
         $page = $request->page;
         $groupBy = $request->groupBy;
-        $bookings = $book::query()
+        $bookings = $book::select(
+            'id_booking',
+            'orderNumber',
+            'bookings.id_user',
+            'bookings.id_property',
+            'bookings.id_rent',
+            'property_name',
+            'rent_name',
+            'checkin',
+            'checkout',
+            'isRated',
+            'status',
+        )
+        ->join('property', 'bookings.id_property', '=', 'property.id_property')
+        ->join('rents', 'bookings.id_rent', '=', 'rents.id_rent')
         ->when($filter, function ($query, $search) {
             $query->where('status', 'like', "%{$search}%")
                   ->orWhere('id_booking', 'like', "%{$search}%");

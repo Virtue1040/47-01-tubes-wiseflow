@@ -341,12 +341,12 @@
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.task p="28"
                                         l="28" class="!fill-white"/>Tasks</x-primary-button>
                             </a>
-                            {{-- <a href="{{ route('property.detail.transaction', $property->id_property) }}">
+                            <a href="{{ route('property.detail.transaction', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center  gap-[10px]"><x-icon.transaction
                                         p="28" l="28" class="!fill-white"/>Transactions</x-primary-button>
                             </a>
-                            <a href="{{ route('property.detail.reservation', $property->id_property) }}">
+                            {{-- <a href="{{ route('property.detail.reservation', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.booking
                                         p="28" l="28" class="!fill-white"/>Reservations</x-primary-button>

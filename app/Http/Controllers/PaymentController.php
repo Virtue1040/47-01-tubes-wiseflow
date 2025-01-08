@@ -15,6 +15,7 @@ use App\Models\Booking;
 use App\Models\Property;
 use App\Models\iuran_pay;
 use App\Services\StreamChatService;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -46,6 +47,73 @@ class PaymentController extends Controller
             'type_payment',
             'payment_date',
         )
+        ->when($filter, function ($query, $search) {
+            $query->where('nominal', 'like', "%{$search}%")
+                  ->orWhere('type_payment', 'like', "%{$search}%")
+                  ->orWhere('id_transaction', 'like', "%{$search}%");
+        })->when($request->orderBy, function ($query) use ($request) {
+            $orderBy = $request->orderBy;
+            $query->orderBy($orderBy, 'desc'); 
+        })->paginate($limit, ['*'], 'page', $page);
+        return response()->json([
+            "success" => true,
+            "message" => "Berhasil mengambil data Payments",
+            "data" => $payments,
+        ], 200);
+    }
+
+    public function getByProperty(Request $request, $id) {
+        $limit = $request->maxPage;
+        $filter = $request->search;
+        $page = $request->page;
+        $groupBy = $request->groupBy;
+        $payments = payments::select(
+            'payments.checkNumber',
+            'id_transaction',
+            DB::raw("CONCAT(contact_information.first_name, ' ', contact_information.last_name) as full_name"),
+            'nominal',
+            'status_payment',
+            'type_payment',
+            'payment_date',
+        )
+        ->join('orderdetails', 'payments.checkNumber', '=', 'orderdetails.checkNumber')
+        ->join('bookings', 'bookings.orderNumber', "=", "orderdetails.orderNumber")
+        ->join('contact_information', 'contact_information.id_user', '=', 'bookings.id_user')
+        ->where("bookings.id_property", $id)
+        ->when($filter, function ($query, $search) {
+            $query->where('nominal', 'like', "%{$search}%")
+                  ->orWhere('type_payment', 'like', "%{$search}%")
+                  ->orWhere('id_transaction', 'like', "%{$search}%");
+        })->when($request->orderBy, function ($query) use ($request) {
+            $orderBy = $request->orderBy;
+            $query->orderBy($orderBy, 'desc'); 
+        })->paginate($limit, ['*'], 'page', $page);
+        return response()->json([
+            "success" => true,
+            "message" => "Berhasil mengambil data Payments",
+            "data" => $payments,
+        ], 200);
+    }
+
+    public function iuran_getByProperty(Request $request, $id) {
+        $limit = $request->maxPage;
+        $filter = $request->search;
+        $page = $request->page;
+        $groupBy = $request->groupBy;
+        $payments = payments::select(
+            'payments.checkNumber',
+            'id_transaction',
+            DB::raw("CONCAT(contact_information.first_name, ' ', contact_information.last_name) as full_name"),
+            'payments.nominal',
+            'status_payment',
+            'type_payment',
+            'payment_date',
+        )
+        ->join('orderdetails', 'payments.checkNumber', '=', 'orderdetails.checkNumber')
+        ->join('iuran_pays', 'iuran_pays.orderNumber', "=", "orderdetails.orderNumber")
+        ->join('contact_information', 'contact_information.id_user', '=', 'iuran_pays.id_user')
+        ->join('iurans', 'iurans.id_iuran', '=', 'iuran_pays.id_iuran')
+        ->where("iurans.id_property", $id)
         ->when($filter, function ($query, $search) {
             $query->where('nominal', 'like', "%{$search}%")
                   ->orWhere('type_payment', 'like', "%{$search}%")
@@ -151,7 +219,7 @@ class PaymentController extends Controller
                     }
                 }
                 $payment = payments::create([
-                    'checkNumber' => "CHECK-" . uniqid(),
+                    'checkNumber' => $orderdetails->checkNumber,
                     'id_transaction' => $transaction_id,
                     'nominal' => $gross_amount,
                     'status_payment' => $transaction_status,

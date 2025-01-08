@@ -384,7 +384,7 @@
         onThemeChange();
     }
 }" class="relative h-auto font-sans antialiased dark:bg-[#18181B] overflow-y-hidden">
-    <div class="flex h-auto bg-white dark:bg-[#18181B]">
+    <div class="flex h-auto bg-white dark:bg-[#18181B] overflow-hidden">
         <!-- Layout Navigation -->
         @php
             $user = Auth::user();
