@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('iurans', function (Blueprint $table) {
             $table->integer('id_iuran', 1)->lenght(11)->primary();
             $table->integer('id_property')->length(11);
-            $table->foreign('id_property')->references('id_property')->on('property')->onDelete('cascade');;
+            $table->foreign('id_property')->references('id_property')->on('property')->onDelete('cascade');
             $table->char('type_iuran', 20);
             $table->string("iuran_desc");
             $table->integer('nominal_iuran')->length(11);

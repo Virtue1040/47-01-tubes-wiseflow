@@ -135,6 +135,7 @@
                             if (response.success) {
                                 let data = response.data
                                 let album = data.album;
+                                let getAlbum = data.get_album;
                                 let rentTag = data.get_rent_tag;
                                 let facilities = data.facilities;
                                 let rentTagHTML = "";
@@ -157,8 +158,8 @@
                                 rent_price.html(`IDR ${data.rent_price} (perDay)`);
                                 id_rent.val(data.id_rent);
                                 
-                                if (album !== null) {
-                                    album.forEach((albums, index) => {
+                                if (getAlbum !== null) {
+                                    getAlbum.forEach((albums, index) => {
                                         imageContainer.append(`
                                                 <li class="${index === 0 ? 'visible' : ''} w-full h-full">
                                                     <div class="w-full h-full bg-white bg-opacity-10 cd-svg-wrapper">

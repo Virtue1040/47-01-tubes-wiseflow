@@ -71,7 +71,7 @@ class RentController extends Controller
 
     public function getById($id)
     {
-        $rent = Rent::where('id_rent', $id)->with("getRentTag")->with("album")->first();
+        $rent = Rent::where('id_rent', $id)->with("getRentTag")->with("album")->with("getAlbum")->first();
         $facilities = [];
         foreach ($rent->getRentFacility as $facility) {
             $facilities[] = Facility::where("id_facility", $facility->id_facility)->first()->facility_name;
