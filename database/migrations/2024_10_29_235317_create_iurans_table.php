@@ -16,12 +16,11 @@ return new class extends Migration
             $table->integer('id_property')->length(11);
             $table->foreign('id_property')->references('id_property')->on('property')->onDelete('cascade');;
             $table->char('type_iuran', 20);
+            $table->string("iuran_desc");
             $table->integer('nominal_iuran')->length(11);
-            $table->string('orderNumber');
-            $table->foreign('orderNumber')->references('orderNumber')->on('orders')->onDelete('cascade');
             $table->char('status', 20);
-            $table->timestamp('tanggal_iuran');
-            $table->timestamp('tenggat_iuran');
+            $table->date('tanggal_iuran');
+            $table->date('tenggat_iuran');
             $table->timestamps();
         });
     }

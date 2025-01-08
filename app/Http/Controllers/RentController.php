@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRentRequest;
 use App\Http\Requests\UpdateRentRequest;
+use App\Models\Booking;
 use App\Models\Facility;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Models\property_comment;
 use App\Models\Rent;
 use App\Models\rentalbum;
 use App\Rules\OwnsProperty;
@@ -36,9 +38,45 @@ class RentController extends Controller
         ]);
     }
 
+    public function rate(Request $request, $id) {
+        $request->validate([
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['required', 'string'],
+        ]);
+        $getBooking = Booking::where("id_booking", $id)->where("id_user", Auth::user()->id_user)->first();
+        $getRent = Rent::where('id_rent', $getBooking->id_rent)->firstOrFail();
+        property_comment::create([
+            'id_property' => $getBooking->id_property,
+            'id_rent' => $getBooking->id_rent,
+            'id_user' => Auth::user()->id_user,
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+        ]);
+        $getBooking->isRated = 1;
+        $getBooking->save();
+
+        if ($request->header('Accept') === 'application/json') {
+            return response()->json([
+                "success" => true,
+                "message" => "Berhasil merating Rent",
+            ], 200);
+        } else {
+            session()->flash('alert', [
+                'type' => 'success',
+                'message' => 'Rent Rated',
+            ]);
+            return redirect()->back();
+        }
+    }
+
     public function getById($id)
     {
         $rent = Rent::where('id_rent', $id)->with("getRentTag")->with("album")->first();
+        $facilities = [];
+        foreach ($rent->getRentFacility as $facility) {
+            $facilities[] = Facility::where("id_facility", $facility->id_facility)->first()->facility_name;
+        } 
+        $rent->facilities = $facilities;
         return response()->json([
             "success" => true,
             "message" => "Berhasil mengambil data Rent",

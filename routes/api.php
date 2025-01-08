@@ -12,19 +12,27 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('api/swagger', [Documentation\SwaggerController::class, 'dummy']);
 });
 
+Route::post('api/midtrans/callback', [PaymentController::class, "callback"])
+    ->name('callback');
+
 Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () {
     //Misc Route
     Route::get('api/user/search', function() {
         $q = request()->q;
-        $getUser = ContactInformation::select(DB::raw('CONCAT(first_name, " ", last_name) as name'), 'users.id_user', 'profilePath', 'social_avatar', 'contact_information.email')
+        $id_rent = request()->id_rent;
+        if ($id_rent === null) {
+            $getUser = ContactInformation::select(DB::raw('CONCAT(first_name, " ", last_name) as name'), 'users.id_user', 'profilePath', 'social_avatar', 'contact_information.email')
             ->join('users', 'users.id_user', '=', 'contact_information.id_user')
             ->where(DB::raw('CONCAT(first_name, " ", last_name)'), 'like', "%$q%")->get();
+        } else {
+            $getUser = ContactInformation::select(DB::raw('CONCAT(first_name, " ", last_name) as name'), 'users.id_user', 'profilePath', 'social_avatar', 'contact_information.email')
+            ->join('users', 'users.id_user', '=', 'contact_information.id_user')
+     ->where(DB::raw('CONCAT(first_name, " ", last_name)'), 'like', "%$q%")
+            ->join('residents', 'users.id_user', '=', 'residents.id_user')
+            ->where('residents.id_rent', $id_rent)->get();
+        }
         $data = $getUser;
         foreach ($data as $key => $value) {
-          
-            if ($value['id_user'] === 4) {
-
-            }
             $data[$key]['profile'] = $value->profilePath === null ? $value->social_avatar : asset('storage/' . $value->profilePath);
         }
         return response()->json([
@@ -38,14 +46,28 @@ Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () 
     Route::get('api/payment/checkout', [PaymentController::class, 'store'])->name('payment.store');
 
     //Booking Route
+    Route::get('api/task', [TaskController::class, "get"])
+        ->name('task.get');
+    Route::delete('api/task/{id}', [TaskController::class, "destroy"])
+        ->name('task.delete');
+    Route::post('api/task', [TaskController::class, "store"])
+        ->name('task.store');
+    Route::put('api/task/{id}', [TaskController::class, "update"])
+        ->name('task.update');
+
+    //Booking Route
     Route::get('api/booking', [BookingController::class, "get"])
         ->name('booking.get');
+    Route::delete('api/booking/{id}', [BookingController::class, "destroy"])
+        ->name('booking.delete');
     Route::post('api/booking', [BookingController::class, "store"])
         ->name('booking.store');
     Route::get('api/booking/getAll', [BookingController::class, "getAll"])
         ->name('booking.getAll');
-    Route::get('api/callback', [BookingController::class, "callback"])
-        ->name('callback');
+        
+    //Transaction Route
+    Route::get('api/transaction', [PaymentController::class, "get"])
+        ->name('transaction');
 
     //Chat route
     Route::post('api/chat/generate-token', [CommunicationController::class, 'generateToken'])->name('chat.token');
@@ -102,6 +124,8 @@ Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () 
         ->name('rent.update');
     Route::delete('api/rent/{id}', [RentController::class, "destroy"])
         ->name('rent.delete');
+    Route::post('api/rent/rate/{id}', [RentController::class, "rate"])
+        ->name('rent.rate');
     Route::post('api/rent/cover/{id}', [RentController::class, "updateCover"])
         ->name('rent.store.cover');
 
@@ -172,6 +196,10 @@ Route::group(['middleware' => ['auth', 'auth:sanctum', 'hasRole']], function () 
         ->name('iuran.update');
     Route::get('api/iuran', [IuranController::class, "get"])
         ->name('iuran.get');
+    Route::get('api/getbills', [IuranController::class, "getbills"])
+        ->name('iuran.getbills');
+    Route::post('api/paybill/{id}', [IuranController::class, "paybill"])
+        ->name('iuran.paybill');
     Route::post('api/iuran', [IuranController::class, "store"])
         ->name('iuran.store');
 

@@ -10,7 +10,13 @@
         name="templateEdit"><x-icon.set p="20" l="20" /></button>
     <button
         class="w-auto bg-gray-200 hidden p-[5px] dark:bg-[#242427] border-[1px] dark:border-[#464649] justify-center items-center rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-[#2F2F32]"
+        name="templateFavorite"><x-icon.star p="20" l="20" filled/></button>
+    <button
+        class="w-auto bg-gray-200 hidden p-[5px] dark:bg-[#242427] border-[1px] dark:border-[#464649] justify-center items-center rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-[#2F2F32]"
         name="templateDelete"><x-icon.delete p="20" l="20" /></button>
+    <button
+        class="w-auto bg-gray-200 hidden p-[5px] dark:bg-[#242427] border-[1px] dark:border-[#464649] justify-center items-center rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-[#2F2F32]"
+        name="templatePay"><x-icon.transaction p="20" l="20" /></button>
     <div class="h-[60px] px-7 py-3 flex justify-between dark:bg-[#18181B] bg-white rounded-t-2xl" name="topbar">
         <x-select class="dark:!border-[#464649] !rounded-lg">
             <option value=0 selected>Group By</option>

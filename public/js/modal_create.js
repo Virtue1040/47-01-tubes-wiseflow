@@ -47,6 +47,9 @@ function init_create_modal(name, stepArray, stepContainer, validator, property) 
 
             div.click(function (event) {
                 if (event.target === div[0]) {
+                    if (property["disableClose"]) {
+                        return;
+                    }
                     div.remove();
                 }
             });

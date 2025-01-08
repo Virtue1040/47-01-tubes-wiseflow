@@ -2,7 +2,7 @@
     <script>
         $(document).ready(function() {
             handle_itemlist($('#booking-list'), 'booking/getAll',{
-                'id_booking': 'ID Booking',
+                'orderNumber': 'Order Number',
                 'id_property': 'Property',
                 'status': 'Status',
                 'checkin': 'Check In',

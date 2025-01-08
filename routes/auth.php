@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Models\Facility;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -65,7 +66,7 @@ Route::group(['middleware' => ['auth', 'hasRole', 'hasProperty']], function() {
         ->name('property.detail');
     Route::get('view/property/{id}/edit', [PropertyController::class, "edit"])
         ->name('property.edit');
-    Route::get('view/property/{id}/task', [PropertyController::class, "showGuest"])
+    Route::get('view/property/{id}/task', [PropertyController::class, "showTask"])
         ->name('property.detail.task');
     Route::get('view/property/{id}/calendar', [PropertyController::class, "showCalendar"])
         ->name('property.detail.calendar');
@@ -73,7 +74,7 @@ Route::group(['middleware' => ['auth', 'hasRole', 'hasProperty']], function() {
         ->name('property.detail.transaction');
     Route::get('view/property/{id}/reservation', [PropertyController::class, "showDetail"])
         ->name('property.detail.reservation');
-    Route::get('view/property/{id}/iuran', [IuranController::class, "index"])
+    Route::get('view/property/{id}/iuran', [IuranController::class, "create"])
         ->name('property.detail.iuran');
     Route::get('view/property/{id}/rent/{id_rent?}', [RentController::class, "overview"])
         ->name('property.detail.rent.overview');
@@ -105,12 +106,19 @@ Route::group(['middleware' => ['auth', 'hasRole']], function() {
         ->name('booking');
     Route::get('view/all-booking', [BookingController::class, "index2"])
         ->name('all-booking');
+     Route::get('view/all-transaction', [PaymentController::class, "index"])
+        ->name('all-transaction');
     Route::get('view/calendar', [SchedulerController::class, "index"])
         ->name('calendar');
+    Route::get('view/bill', [IuranController::class, "index"])
+        ->name('bill');
     Route::get('view/task', [SchedulerController::class, "showTask"])
         ->name('task');
     Route::get('view/find', function() {
-        return view('view.findproperty');
+        $facility = Facility::where("id_property", null)->get();
+        return view('view.findproperty', [
+            "facility" => $facility
+        ]);
     })->name('findproperty');
 
     Route::get('verify-email', EmailVerificationPromptController::class)

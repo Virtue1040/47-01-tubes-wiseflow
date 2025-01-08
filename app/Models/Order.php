@@ -11,9 +11,18 @@ class Order extends Model
         'id_user',
     ];
     protected $primaryKey = 'orderNumber';
+    protected $keyType = 'string';
+    protected $cast = [
+        "orderNumber" => 'string',
+    ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasOne(orderdetails::class, 'orderNumber', 'orderNumber');
     }
 }

@@ -644,7 +644,7 @@ echo $user->contactInformation->profilePath == null ? $user->social_avatar : ass
 
                 <div class="w-full h-auto bg-white min-h-fit dark:bg-[#18181B]">
                     <div
-                        class="w-fu;; flex h-auto md:min-h-[calc(100vh-70px)] min-h-fit dark:bg-[#09090B] bg-[#f1f1f1] p-[0px] md:p-[25px]  dark:border-gray-800 border-white rounded-xl overflow-hidden">
+                        class="w-full flex h-auto md:min-h-[calc(100vh-70px)] min-h-fit dark:bg-[#09090B] bg-[#f1f1f1] p-[0px] md:p-[25px]  dark:border-gray-800 border-white rounded-xl overflow-hidden">
                         <div
                             class="w-full h-auto flex-grow rounded-xl border-2 dark:bg-[#18181B] dark:bg-opacity-50 bg-gray-100 border-[#5E93DA] shadow-lg ">
                             <div class="w-full overflow-y-auto h-[calc(100vh-125px)] p-[25px]

@@ -11,6 +11,7 @@ class Iuran extends Model
         'type_iuran',
         'nominal_iuran',
         'status',
+        'iuran_desc',
         'tanggal_iuran',
         'tenggat_iuran',
         'created_at',
@@ -22,13 +23,9 @@ class Iuran extends Model
     {
         return $this->belongsTo(Property::class, 'id_property', 'id_property');
     }
-
-    public function order() {
-        return $this->hasMany(Order::class, 'orderNumber', 'orderNumber');
-    }
-
+    
     public function orderdetail() {
-        return $this->hasMany(orderdetails::class, 'orderNumber', 'orderNumber');
+        return $this->hasMany(orderdetails::class, 'id_item', 'id_iuran')->where("type_order", "iuran");
     }
 
     public function isLunas() {

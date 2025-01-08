@@ -28,7 +28,6 @@
         })
 
         function editContact(data) {
-            console.log(data);
             if (createBounced) {
                 return;
             }

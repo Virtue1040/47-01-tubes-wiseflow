@@ -39,6 +39,10 @@
                                 <div class="flex flex-col gap-2 w-full h-full">
                                     <x-a-label class="text-xl font-bold" name="rent_name">Nama Rent</x-a-label>
                                     <x-a-label class="text-md" name="rent_description">Description</x-a-label>
+                                    <x-a-label class="mt-2 text-md">Facilities </x-a-label>
+                                    <div class="flex flex-wrap gap-1 mt-1" name="facilityContainer">
+                                        
+                                    </div>
                                 </div>
                                 <div class="flex flex-col w-full h-full">
                                     <div class="justify-between w-full">
@@ -108,13 +112,16 @@
                         </div>
                 `,
             ], {
+                1: [],
                 2: ['checkin_date', 'checkin_time', 'checkout_date', 'checkout_time'],
             }, {
                 lastButton: "Book Rent",
+                disableClose: true,
                 onCreate: function(form, div) {
                     let controlContainer = form.find('[name="controlContainer"]');
                     let imageContainer = form.find('[name="imageContainer"]');
                     let rentTagContainer = form.find('[name="rentTagContainer"]');
+                    let facilityContainer = form.find('[name="facilityContainer"]');
                     let rent_name = form.find('[name="rent_name"]');
                     let rent_description = form.find('[name="rent_description"]');
                     let rent_price = form.find('[name="rent_price"]');
@@ -129,20 +136,25 @@
                                 let data = response.data
                                 let album = data.album;
                                 let rentTag = data.get_rent_tag;
+                                let facilities = data.facilities;
                                 let rentTagHTML = "";
-
-                                console.log(rent_name);
-                                console.log(data);
-
+                                let facilityHTML = "";
+                                
                                 rentTag.forEach((tag) => {
                                     rentTagHTML +=
                                         `<p class="bg-[#5E93DA] py-[5px] text-xs px-[10px]  text-white w-fit rounded-full align-middle">${tag.tag}</p>`;
                                 });
+
+                                facilities.forEach((facility) => {
+                                    facilityHTML +=
+                                        `<p class="bg-[#5E93DA] py-[5px] text-xs px-[10px]  text-white w-fit rounded-full align-middle">${facility}</p>`;
+                                });
                                 
                                 rentTagContainer.append(rentTagHTML);
+                                facilityContainer.append(facilityHTML);
                                 rent_name.html(data.rent_name);
                                 rent_description.html(data.rent_desc);
-                                rent_price.html(`IDR ${data.rent_price}`);
+                                rent_price.html(`IDR ${data.rent_price} (perDay)`);
                                 id_rent.val(data.id_rent);
                                 
                                 if (album !== null) {
@@ -215,19 +227,20 @@
                                     window.snap.embed(response.token, {
                                         embedId: 'snap-container',
                                         onSuccess: function (result) {
-                                            alert("payment success!"); console.log(result);
+                                            Toast.fire({
+                                                icon: 'success',
+                                                title: 'Booking Successfuly',
+                                            });
+                                            div.remove();
                                         },
                                         onPending: function (result) {
-                                       
-                                            alert("wating your payment!"); console.log(result);
+                                            
                                         },
                                         onError: function (result) {
-                                        
-                                            alert("payment failed!"); console.log(result);
+                                            div.remove();
                                         },
                                         onClose: function () {
-                                        
-                                            alert('you closed the popup without finishing the payment');
+                                            div.remove();
                                         }
                                     });
                                     $("#snap-midtrans").css("width", "564px");
@@ -395,29 +408,35 @@
                         <div class="flex justify-between">
                             <div class="flex flex-col gap-[30px]">
                                 <div>
-                                    <x-a-label class="!text-gray-400">Propery type</x-a-label><br>
+                                    <x-a-label class="!text-gray-400">Property type</x-a-label><br>
                                     <x-a-label class="mt-4">{{ $property->property_category }}</x-a-label>
                                 </div>
                                 <div>
-                                    <x-a-label class="!text-gray-400">Propery type</x-a-label><br>
-                                    <x-a-label class="mt-4">{{ $property->property_category }}</x-a-label>
+                                    <x-a-label class="!text-gray-400">Rating</x-a-label><br>
+                                    <div class="flex gap-1 items-center">
+                                        <x-a-label class="">{{ $property->getAvgRating() + 0 }}</x-a-label>
+                                        <x-icon.star p="20" l="20" filled/>
+                                    </div>
                                 </div>
                             </div>
                             <div class="flex flex-col gap-[30px]">
                                 <div>
-                                    <x-a-label class="!text-gray-400">Propery type</x-a-label><br>
-                                    <x-a-label class="mt-4">{{ $property->property_category }}</x-a-label>
+                                    <x-a-label class="!text-gray-400">Property Facility</x-a-label><br>
+                                    <x-a-label class="mt-4">{{ $property->facility->count() }} Facility</x-a-label>
                                 </div>
                                 <div>
-                                    <x-a-label class="!text-gray-400">Propery type</x-a-label><br>
-                                    <x-a-label class="mt-4">{{ $property->property_category }}</x-a-label>
+                                    <x-a-label class="!text-gray-400">Property Rent</x-a-label><br>
+                                    <x-a-label class="mt-4">{{ $property->rentPublic->count() }} Rents</x-a-label>
                                 </div>
                             </div>
                         </div>
                     </x-box-dropdown>
                     <x-box-dropdown class="w-full" name="Rents">
                         <div class="flex gap-[15px] flex-col">
-                            @foreach ($property->rent as $rent)
+                            @foreach ($property->rentPublic as $rent)
+                                @if ($rent->available === 0)
+                                    @continue
+                                @endif
                                 <div class="flex flex-col w-full">
                                     <div
                                         class="dark:bg-[#09090B] dark:bg-opacity-50 bg-gray-100 rounded-t-2xl overflow-hidden">
@@ -448,7 +467,7 @@
                                                             @php
                                                                 $price = number_format($rent->rent_price, 2, ',', '.');
                                                             @endphp
-                                                            <x-a-label>IDR {{ $price }}</x-a-label>
+                                                            <x-a-label>IDR {{ $price }} (perDay)</x-a-label>
                                                         </div>
                                                         {{-- <div class="flex gap-[10px] w-[100%] items-center">
                                                             <div class="dark:bg-[#464649] rounded-full w-[25px] h-[25px] flex justify-center items-center p-1">

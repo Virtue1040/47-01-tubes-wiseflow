@@ -17,6 +17,7 @@ class Property extends Model
         'property_desc',
         'property_category',
         'id_cover',
+        'property_bank'
     ];
 
     protected $primaryKey = 'id_property';
@@ -35,6 +36,10 @@ class Property extends Model
     public function rent()
     {
         return $this->hasMany(Rent::class, "id_property", "id_property");
+    }
+
+    public function rentPublic() {
+        return $this->hasMany(Rent::class, "id_property", "id_property")->where('availability', 1);
     }
 
     public function facility()

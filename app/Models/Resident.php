@@ -10,7 +10,7 @@ class Resident extends Model
         'id_user',
         'id_property',
         'id_rent',
-        'id_role'
+        'id_booking',
     ];
     protected $primaryKey = 'id_resident';
     

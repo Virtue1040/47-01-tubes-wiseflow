@@ -111,12 +111,20 @@ function handle_itemlist(itemlist, table, column, property) {
                     let listData = ``;
                     $.each(column, function (index, columnName) {
                         if (column[index] === undefined) { return true; }
-                        listData += `
+                        if (columnName === 'Status') {
+                            let curs = $(`
                             <td class="p-4">
-                                <a class="text-black dark:text-gray-300">${itemData[index]}</a>
+                                <p class="bg-[#5E93DA] py-[5px] text-xs px-[10px]  text-white w-fit rounded-full align-middle">${toUpperCase(itemData[index])}</p>
                             </td>
-                        `
-
+                            `);
+                            listData += property["onStatusColor"] ? property["onStatusColor"](itemData, curs) : curs.prop('outerHTML');
+                        } else {
+                            listData += `
+                                <td class="p-4">
+                                    <a class="text-black dark:text-gray-300">${itemData[index]}</a>
+                                </td>
+                            `
+                        }
                     });
 
                     let theList = list.append(`
@@ -128,26 +136,74 @@ function handle_itemlist(itemlist, table, column, property) {
                             </tr>
                         `)
                     if (property['useAction']) {
-                        let cloneTemplateDelete = itemlist.find('[name="templateDelete"]').clone();
-                        let cloneTemplateSet = itemlist.find('[name="templateEdit"]').clone();
-                        cloneTemplateDelete.removeClass('hidden');
-                        cloneTemplateSet.removeClass('hidden');
+                        let total = ``;
+                        function addButtonFunction(buttonName) {
+                            switch (buttonName) {
+                                case 'edit':
+                                    let cloneTemplateSet = itemlist.find('[name="templateEdit"]').clone();
+                                    cloneTemplateSet.removeClass('hidden');
+                                    total += cloneTemplateSet.prop('outerHTML');
+                                    break;
+                                case 'delete':
+                                    let cloneTemplateDelete = itemlist.find('[name="templateDelete"]').clone();
+                                    cloneTemplateDelete.removeClass('hidden');
+                                    total += cloneTemplateDelete.prop('outerHTML');
+                                    break;
+                                case 'favorite':
+                                    let cloneTemplateFavorite = itemlist.find('[name="templateFavorite"]').clone();
+                                    cloneTemplateFavorite.removeClass('hidden');
+                                    total += cloneTemplateFavorite.prop('outerHTML');
+                                    break;
+                                case 'pay':
+                                    let cloneTemplatePay = itemlist.find('[name="templatePay"]').clone();
+                                    cloneTemplatePay.removeClass('hidden');
+                                    total += cloneTemplatePay.prop('outerHTML');
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        if (property["onActionCreate"]) {
+                            property["onActionCreate"](itemData, theList.find(`tr[name='${i}']`), addButtonFunction);
+                        }
+
+                        if (property["useEdit"] || property["useEdit"] === undefined) {
+                            let cloneTemplateSet = itemlist.find('[name="templateEdit"]').clone();
+                            cloneTemplateSet.removeClass('hidden');
+                            total += cloneTemplateSet.prop('outerHTML');
+                        }
+                        if (property["useDelete"] || property["useDelete"] === undefined) {
+                            let cloneTemplateDelete = itemlist.find('[name="templateDelete"]').clone();
+                            cloneTemplateDelete.removeClass('hidden');
+                            total += cloneTemplateDelete.prop('outerHTML');
+                        }
+
                         let button = $(`
                                 <td class="p-4 flex gap-[10px]">
-                                    ${cloneTemplateSet.prop('outerHTML')}
-                                    ${cloneTemplateDelete.prop('outerHTML')}
+                                    ${total}
                                 </td>
                             `);
-                        button.find('button[name="templateDelete"]').click(function () {
-                            if (property['onDelete']) {
-                                property['onDelete'](itemData);
-                            }
-                        })
-                        button.find('button[name="templateEdit"]').click(function () {
-                            if (property['onEdit']) {
-                                property['onEdit'](itemData);
-                            }
-                        })
+                            
+                            button.find('button[name="templateEdit"]').click(function () {
+                                if (property['onEdit']) {
+                                    property['onEdit'](itemData);
+                                }
+                            })
+                            button.find('button[name="templateDelete"]').click(function () {
+                                if (property['onDelete']) {
+                                    property['onDelete'](itemData);
+                                }
+                            })
+                            button.find('button[name="templateFavorite"]').click(function () {
+                                if (property['onFavorite']) {
+                                    property['onFavorite'](itemData);
+                                }
+                            })
+                            button.find('button[name="templatePay"]').click(function () {
+                                if (property['onPay']) {
+                                    property['onPay'](itemData);
+                                }
+                            })
                         theList.find(`tr[name='${i}']`).append(button);
                     }
                 }
@@ -170,10 +226,10 @@ function handle_itemlist(itemlist, table, column, property) {
             maxPage = perPageList.val();
             populateTable(true);
         })
-        $(search).on('change input', function () {
+        $(search).onPause(function() {
             filter = search.val();
             populateTable(true);
-        })
+        }, 500)
         next.click(function () {
             if (page < tableInfo['last_page']) {
                 page++;

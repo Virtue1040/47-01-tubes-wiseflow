@@ -78,7 +78,7 @@
                                     </div>
                                 </x-nav-div>   
                             @endif 
-                            <x-nav-div :href="route('property.detail.calendar', $property_id)" :active="request()->routeIs('property.detail.calendar')" class="relative w-full">
+                            {{-- <x-nav-div :href="route('property.detail.calendar', $property_id)" :active="request()->routeIs('property.detail.calendar')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
                                     <x-icon.calendar p="20" l="20" :active="request()->routeIs('property.detail.calendar')"></x-icon.calendar>
                                     <p>{{ __('Calendar') }}</p>
@@ -88,7 +88,7 @@
 
                                     </div>
                                 </div>
-                            </x-nav-div>
+                            </x-nav-div> --}}
                             <x-nav-div :href="route('property.detail.rent.overview', $property_id)" :active="request()->routeIs('property.detail.rent.overview')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
                                     <x-icon.rent p="20" l="20" :active="request()->routeIs('property.detail.rent.overview')"></x-icon.property>
@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                             </x-nav-div> --}}
-                            <x-nav-div :href="route('property.detail.reservation', $property_id)" :active="request()->routeIs('property.detail.reservation')" class="relative w-full">
+                            {{-- <x-nav-div :href="route('property.detail.reservation', $property_id)" :active="request()->routeIs('property.detail.reservation')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
                                     <x-icon.booking p="20" l="20" :active="request()->routeIs('property.detail.reservation')"></x-icon.booking>
                                     <p>{{ __('Reservations') }}</p>
@@ -132,7 +132,7 @@
 
                                     </div>
                                 </div>
-                            </x-nav-div>
+                            </x-nav-div> --}}
                             <x-nav-div :href="route('property.detail.iuran', $property_id)" :active="request()->routeIs('property.detail.iuran')" class="relative w-full">
                                 <div class="flex gap-[15px] items-center mx-5 ml-14 h-full p-[10px]">
                                     <x-icon.iuran p="20" l="20" :active="request()->routeIs('property.detail.iuran')"></x-icon.iuran>
@@ -151,9 +151,14 @@
                     <x-nav-div :href="route('calendar')" :active="request()->routeIs('calendar')" class="w-full">
                         <div class="flex gap-[15px] items-center mx-5  h-full p-[10px]">
                             <x-icon.calendar p="20" l="20" :active="request()->routeIs('calendar')"></x-icon.calendar>
-                            <p>{{ __('My Calendar') }}</p>
+                            <p>{{ __('My Task') }}</p>
                         </div>
-
+                    </x-nav-div>
+                    <x-nav-div :href="route('bill')" :active="request()->routeIs('bill')" class="w-full">
+                        <div class="flex gap-[15px] items-center mx-5  h-full p-[10px]">
+                            <x-icon.transaction p="20" l="20" :active="request()->routeIs('bill')"></x-icon.transaction>
+                            <p>{{ __('My Bill') }}</p>
+                        </div>
                     </x-nav-div>
                 </x-nav-dropdown>
                 <x-nav-dropdown name="Booking">
@@ -176,9 +181,9 @@
                                 <p>{{ __('All Bookings') }}</p>
                             </div>
                         </x-nav-div>
-                        <x-nav-div :href="route('all-booking')" :active="request()->routeIs('all-booking')" class="w-full">
+                        <x-nav-div :href="route('all-transaction')" :active="request()->routeIs('all-transaction')" class="w-full">
                             <div class="flex gap-[15px] items-center mx-5  h-full p-[10px]">
-                                <x-icon.transaction p="20" l="20" :active="request()->routeIs('all-booking')"></x-icon.transaction>
+                                <x-icon.transaction p="20" l="20" :active="request()->routeIs('all-transaction')"></x-icon.transaction>
                                 <p>{{ __('All Transactions') }}</p>
                             </div>
                         </x-nav-div>

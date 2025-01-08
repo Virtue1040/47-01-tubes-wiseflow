@@ -166,9 +166,6 @@
                                 console.log(long + ' ' + lat);
                                 console.log(longitude);
                             });
-                            console.log(longitude);
-                            console.log(longitude.val());
-                            console.log(latitude.val());
                             
                         }
                     },

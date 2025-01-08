@@ -28,8 +28,13 @@
                     {{-- <canvas id="paymentChart"></canvas> --}}
                 </div>
             </div>
-
-            <div class="flex justify-center py-10">
+             
+            {{-- corousel --}}
+            <div class="flex flex-row mt-8">
+                <x-a-label class="font-bold !text-black text-2xl">rental recommendations</x-a-label>
+                {{-- <x-a-label class="" id="itemResult !text-gray-400">0 Result</x-a-label> --}}
+            </div>
+            <div class="flex justify-center py-5">
                 <div class="grid grid-cols gap-8 md:grid-cols-4 px-[5px]">
                     <div>
                         <img src="{{ asset('img/house-thailand.jpg  ') }}" class=""></img>
@@ -50,7 +55,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-row gap-8 mt-8">
+            <div class="flex flex-row gap-8 mt-2">
                 <x-a-label class="font-bold !text-black text-2xl">Popular of the week</x-a-label>
                 {{-- <x-a-label class="" id="itemResult !text-gray-400">0 Result</x-a-label> --}}
             </div>

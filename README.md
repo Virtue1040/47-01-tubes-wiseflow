@@ -1,4 +1,4 @@
-# Neat Clean
+# Wise Flow
 
 Wise Flow adalah platform inovatif yang dirancang untuk
 pemilik kost atau kontrakan agar dapat mengelola properti mereka

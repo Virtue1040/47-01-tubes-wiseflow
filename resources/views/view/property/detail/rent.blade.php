@@ -986,7 +986,7 @@
                                     
                                 </div>
                                 <div class="mt-3 w-full h-full min-w-[0px]">
-                                        <x-input-label for="rent_price">Rent Price <a class="text-red-700">*</a></x-input-label>
+                                        <x-input-label for="rent_price">Rent Price (perDay)<a class="text-red-700">*</a></x-input-label>
                                         <x-custom-input id="rent_price" class="!pr-[0px]" placeholder="Price"  type="number" name="rent_price"
                                             :value="old('rent_price')"  autofocus>Rp.</x-custom-input>
                                     </div>
@@ -1437,10 +1437,10 @@
                         x-bind:class="openedRent === 'overview' ? 'bg-[#5E93DA]' : 'hover:bg-[#5E93DA] hover:bg-opacity-50'"
                         class="px-[10px] rounded-full"><x-a-label
                             x-bind:class="openedRent === 'overview' ? 'font-bold !text-white' : ''">Overview</x-a-label></button>
-                    <button @click="openedRent = 'statistic'"
+                    {{-- <button @click="openedRent = 'statistic'"
                         x-bind:class="openedRent === 'statistic' ? 'bg-[#5E93DA]' : 'hover:bg-[#5E93DA] hover:bg-opacity-50'"
                         class="px-[10px] rounded-full "><x-a-label
-                            x-bind:class="openedRent === 'statistic' ? 'font-bold !text-white' : ''">Statistic</x-a-label></button>
+                            x-bind:class="openedRent === 'statistic' ? 'font-bold !text-white' : ''">Statistic</x-a-label></button> --}}
                     <button @click="openedRent = 'guest'"
                         x-bind:class="openedRent === 'guest' ? 'bg-[#5E93DA]' : 'hover:bg-[#5E93DA] hover:bg-opacity-50'"
                         class="px-[10px] rounded-full "><x-a-label
@@ -1479,7 +1479,7 @@
                             </div>
                             <x-input-error :messages="$errors->get('stock')" class="mt-1" />
                             <div class="w-full h-full min-w-[0px]">
-                                <x-input-label for="price">Price <a class="text-red-700">*</a></x-input-label>
+                                <x-input-label for="price">Price (perDay)<a class="text-red-700">*</a></x-input-label>
                                 <x-custom-input id="price" values="{{ $rent->rent_price }}"
                                     class="!pr-[0px]" placeholder="Price"
                                     type="number" name="rent_price" :value="old('rent_price')" autofocus>Rp.

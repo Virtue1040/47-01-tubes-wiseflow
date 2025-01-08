@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
+use App\Models\Facility;
+use App\Models\Order;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,10 +28,18 @@ class DashboardController extends Controller
         $getPercentage = $model::where('created_at', '>=', now()->subWeek()->subWeek())->where('created_at', '<=', now()->subWeek())->get();
         $total = $models->count();
         $totalLastWeek = $getPercentage->count();
+
+        if ($totalLastWeek == 0) {
+            $percent = 0;
+        } else {
+            $percent = ($totalLastWeek / $total) * 100;
+        }
+
         return [
             'total' => $total,
             'totalLastWeek' => $totalLastWeek,
-            'all' => $models
+            'all' => $models,
+            'percent' => $percent
         ];
     }
 
@@ -40,6 +51,9 @@ class DashboardController extends Controller
         // Get Property Card
         $property = $this->getPercentage(Property::class);
         $user = $this->getPercentage(User::class);
+        $facility = $this->getPercentage(Facility::class);
+        $transaction = $this->getPercentage(Order::class);
+        $booking = $this->getPercentage(Booking::class);
         $owner = $this->getPercentage(User::class, function($models) {
             return $models->whereHas('roles', function ($query) {
                 $query->where('name', 'Owner');
@@ -54,19 +68,31 @@ class DashboardController extends Controller
         return view('view.dashboard', [
             'property' => [
                 'object' => $property['all'],
-                'percent' => ($property['totalLastWeek'] / $property['total']) * 100,
+                'percent' => $property['percent'],
             ],
             'user' => [
                 'object' => $user['all'],
-                'percent' => ($user['totalLastWeek'] / $user['total']) * 100,
+                'percent' => $user['percent'],
             ],
             'owner' => [
                 'object' => $owner['all'],
-                'percent' => ($owner['totalLastWeek'] / $owner['total']) * 100,
+                'percent' => $owner['percent']
             ],
             'resident' => [
                 'object' => $resident['all'],
-                'percent' => ($resident['totalLastWeek'] / $resident['total']) * 100,
+                'percent' => $resident['percent'],
+            ],
+            'facility' => [
+                'object' => $facility['all'],
+                'percent' => $facility['percent'],
+            ],
+            'transaction' => [
+                'object' => $transaction['all'],
+                'percent' => $transaction['percent'],
+            ],
+            'booking' => [
+                'object' => $booking['all'],
+                'percent' => $booking['percent'],
             ],
         ]);
     }

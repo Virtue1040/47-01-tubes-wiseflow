@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('orderNumber');
             $table->foreign('orderNumber')->references('orderNumber')->on('orders')->onDelete('cascade');
             $table->char('status')->length(10);
+            $table->boolean("isRated")->default(0);
             $table->timestamp('checkin');
             $table->timestamp('checkout');
             $table->timestamps();

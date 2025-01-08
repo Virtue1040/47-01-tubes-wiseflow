@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSchedulerRequest;
 use App\Http\Requests\UpdateSchedulerRequest;
 use App\Models\Scheduler;
+use App\Models\task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class SchedulerController extends Controller
@@ -15,7 +17,16 @@ class SchedulerController extends Controller
      */
     public function index()
     {
-        return view('view.calendar');
+        $tasks = Task::where("id_user", Auth::user()->id_user)
+        ->join('property', 'property.id_property', '=', 'tasks.id_property')
+        ->join('rents', 'rents.id_rent', '=', 'tasks.id_rent')
+        ->get()
+        ->groupBy(function ($task) {
+            return \Carbon\Carbon::parse($task->created_at)->format('D F Y');
+        });
+        return view('view.calendar', [
+            "tasks" => $tasks
+        ]);
     }
 
     /**
@@ -46,6 +57,15 @@ class SchedulerController extends Controller
      * Display the specified resource.
      */
     public function showTask(Request $request): View
+    {
+
+        return view('view.task');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showCalendar(Request $request)
     {
         return view('view.calendar');
     }

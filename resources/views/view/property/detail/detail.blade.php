@@ -35,6 +35,8 @@
                 'rent_name': 'Rent Name',
                 'full_name': 'Name',
                 'status': 'Status',
+                'checkin': "Check In",
+                'checkout': "Check Out"
             }, {});
 
             var optionsLine = {
@@ -215,6 +217,10 @@
                                             class="bg-[#5E93DA] ml-2 py-[1px] text-sm px-[10px] text-white w-auto rounded-lg cursor-pointer">
                                             Edit Property
                                         </a>
+                                        <a href="{{ route('property.profile', ['id' => $property->id_property]) }}"
+                                            class="bg-[#5E93DA] ml-2 py-[1px] text-sm px-[10px] text-white w-auto rounded-lg cursor-pointer">
+                                            View Property Page
+                                        </a>
                                     </div>
                                     <x-a-label class="text-lg">{{ $property->property_name }}</x-a-label>
                                     <x-a-label class="mt-2 text-xl font-bold">Property Description</x-a-label>
@@ -236,15 +242,18 @@
                                     </div>
                                     <x-a-label class="mx-auto w-full text-center">(from {{ $property->getComment->count() }} votes)</x-a-label>
                                 </div>
-                                <div class="flex gap-[15px] w-full flex-col pr-[10px]">
+                                <div class="flex gap-[15px] mt-4 w-full h-full flex-col pr-[10px]">
                                     @foreach ($property->getComment as $comment)
+                                        @php
+                                            $imaegPath = $comment->rent->id_cover !== null ? $comment->rent->album->imagePath : "a"
+                                        @endphp
                                         <x-card.reviews fullName="{{ $comment->user->getFullName() }}"
                                             comment="{{ $comment->comment }}" rating="{{ $comment->rating }}"
                                             imgUrl="{{ $comment->user->getAvatarUrl() }}"
-                                            rentCover="{{ asset('storage/' . $comment->rent->album->imagePath) }}"
+                                            rentCover="{{ asset('storage/' . $imaegPath) }}"
                                             rentName="{{ $comment->rent->rent_name }}"
                                             propertyId="{{ $property->id_property }}"
-                                            rentId="{{ $comment->rent->id_rent }}" />
+                                            rentId="{{ $comment->rent->id_rent }}"/>
                                     @endforeach
                                 </div>
                             </div>
@@ -317,11 +326,11 @@
                 <x-box-dropdown class="w-full lg:w-[250px] lg:h-full h-[300px]" name="Manage">
                     <div class="w-full h-full">
                         <div class="flex lg:flex-row flex-row flex-wrap  gap-[10px]">
-                            <a href="{{ route('property.detail.calendar', $property->id_property) }}">
+                            {{-- <a href="{{ route('property.detail.calendar', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.calendar
                                         p="28" l="28" class="!fill-white"/>Calendar</x-primary-button>
-                            </a>
+                            </a> --}}
                             <a href="{{ route('property.detail.rent.overview', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.rent p="28"
@@ -332,7 +341,7 @@
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.task p="28"
                                         l="28" class="!fill-white"/>Tasks</x-primary-button>
                             </a>
-                            <a href="{{ route('property.detail.transaction', $property->id_property) }}">
+                            {{-- <a href="{{ route('property.detail.transaction', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center  gap-[10px]"><x-icon.transaction
                                         p="28" l="28" class="!fill-white"/>Transactions</x-primary-button>
@@ -341,7 +350,7 @@
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.booking
                                         p="28" l="28" class="!fill-white"/>Reservations</x-primary-button>
-                            </a>
+                            </a> --}}
                             <a href="{{ route('property.detail.iuran', $property->id_property) }}">
                                 <x-primary-button
                                     class="w-auto h-[50px] !p-[10px] flex items-center gap-[10px]"><x-icon.iuran p="28"

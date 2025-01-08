@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
     <script>
-flex flex-col gap-[25px] 
+        $('#contentContainer').css('padding', '0px');
         $("#contentContainer").css("overflow", 'hidden');
     </script>
     <script>
@@ -260,11 +260,9 @@ flex flex-col gap-[25px]
                                 <div class="mt-3 w-full h-full min-w-[0px]">
                                         <input type="hidden" name="id_user">
                                         <div class="relative">
-                                            <label class="text-black dark:text-gray-300" for="search_user">
-    Search User <a class="text-red-700">*</a>
-</label>
+                                            <label class="text-black dark:text-gray-300" for="search_user">Search User <a class="text-red-700">*</a> </label>
                                             <input value="" autocomplete="off"   class="border-[1px] border-gray-200 dark:border-[#464649] bg-[#FAFAFA] p-2 dark:bg-white dark:bg-opacity-10 dark:text-gray-300  rounded-md  block mt-2 w-full h-full bg-gray-200" style=";" id="search_user" placeholder="Search User by Name" type="text" name="search_user" autofocus="autofocus">
-                                            <div class="overflow-x-hidden border-[1px] border-gray-200 dark:border-[#464649] w-full mt-2 rounded-xl dark:bg-[#18181B] bg-white flex p-2 flex-col gap-[15px] absolute top-100% left-0 max-h-[205px] overflow-y-auto
+                                            <div class="overflow-x-hidden hidden border-[1px] border-gray-200 dark:border-[#464649] w-full mt-2 rounded-xl dark:bg-[#18181B] bg-white flex p-2 flex-col gap-[15px] absolute top-100% left-0 max-h-[205px] overflow-y-auto
                                             [&::-webkit-scrollbar]:w-[2px]
                                             [&::-webkit-scrollbar-track]:rounded-full
                                             [&::-webkit-scrollbar-thumb]:rounded-full
@@ -293,9 +291,9 @@ flex flex-col gap-[25px]
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    let searchUser = $(form).find(
-                                    'div[name="search_user"]');
+                                    let searchUser = $(form).find('div[name="search_user"]');
                                     searchUser.empty();
+                                    searchUser.removeClass("hidden");
                                     response.data.forEach(user => {
                                         let userElement = $(`
                                             <div class="p-1 rounded-lg dark:hover:bg-[#FAFAFA] dark:hover:bg-opacity-10 hover:bg-gray-100 flex items-center gap-[10px] cursor-pointer" >
@@ -324,6 +322,7 @@ flex flex-col gap-[25px]
                                                 'input[name="search_user"]'
                                                 ).val(user.name);
                                             searchUser.empty();
+                                            searchUser.addClass("hidden");
                                         })
                                         userElement.find('img').attr('name', user
                                             .name);
@@ -823,7 +822,7 @@ flex flex-col gap-[25px]
 
         let activeChat = undefined;
     </script>
-    <div x-data="{ openSideContact: true }" class="flex w-full">
+    <div x-data="{ openSideContact: true }" class="flex w-full h-full">
         <div x-data="{ openedMenu: 'Chat' }" x-show="openSideContact"
             x-transition:enter="transition-transform ease-out duration-300" x-transition:enter-start="translate-x-[-100%]"
             x-transition:enter-end="translate-x-0" x-transition:leave="transition-transform ease-in duration-200"
@@ -889,10 +888,6 @@ flex flex-col gap-[25px]
                                     <input autocomplete="off" type="text" placeholder="Search"
                                         class="bg-transparent pl-[35px] w-full focus:outline-[#5E93DA] focus:outline focus:outline-2 rounded-lg">
                                 </div>
-
-
-
-
                             </div>
                             <div class="flex flex-col gap-[10px] overflow-y-auto h-fit flex-1 flex-grow py-[10px] [&amp;::-webkit-scrollbar]:w-[2px]
                             [&amp;::-webkit-scrollbar-track]:rounded-full

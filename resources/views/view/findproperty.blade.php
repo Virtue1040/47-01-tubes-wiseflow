@@ -38,17 +38,25 @@
             let groupBy = '';
             let orderBy = undefined;
             let popups = null;
+            let filter = {
+                "filter_place": [],
+                "filter_type": [],
+                "filter_price": [],
+                "filter_facility": []
+                
+            };
             
-            function searchProperty(text) {
+            function searchProperty() {
                 $.ajax({
                     url: "{{ route('property.search', 'a    ') }}",
                     method: 'GET',
                     data: {
-                        search: text,
+                        search: $("#search_property").val(),
                         page: page,
                         maxPage: maxPage,
                         groupBy: groupBy,
-                        orderBy: orderBy
+                        orderBy: orderBy,
+                        filter: filter
                     },
                     success: function(response) {
                         console.log(response);
@@ -112,10 +120,38 @@
                 })                
             }
 
-            searchProperty('');
+            searchProperty();
 
             $("#search_property").onPause(function() {
-                searchProperty($(this).val());
+                searchProperty();
+            }, 50)
+
+            Object.keys(filter).forEach(key => {
+                $(`select[name="${key}"]`).change(function() {
+                    if ($(this).val() === "") {return;}
+                    let text = $(this).val();
+                    $(this).val("");
+                    let exist = false;
+                    Object.keys(filter[key]).forEach(index => {
+                        if (filter[key][index] === text) {
+                            filter[key].splice(index, 1);
+                            $("#tagContainer").find(`[name='${text}']`).remove();
+                            exist = true;
+                        }
+                    })
+                    if (exist) {return;}
+                    filter[key].push(text);
+                    let button = $(`
+                        <a class="bg-[#5E93DA] py-[1px] text-sm px-[10px] text-white w-auto rounded-lg cursor-pointer" name="${text}">${text}</a>
+                    `)
+                    button.click(function() {
+                        filter[key].splice(filter[key].indexOf(text), 1);
+                        searchProperty();
+                        $(this).remove();
+                    })
+                    $("#tagContainer").append(button)
+                    searchProperty();
+                })
             })
         })
     </script>
@@ -130,28 +166,43 @@
                         </div><br>
                         <hr class="dark:border-[#464649] border-gray-200 w-full"><br>
                         <div class="flex gap-[10px] w-full">
-                            <x-select class="p-[6.5px] w-full" name="filter_price" value="Price">
-                                <option value="" selected>Place Filter</option>
-                            </x-select>
-                            <x-select class="p-[6.5px] w-full" name="filter_price" value="Price">
+                            <x-select class="p-[6.5px] w-full" name="filter_type" value="Property_Type">
                                 <option value="" selected>Property Type Filter</option>
+                                @foreach (config("enums.property_category") as $key => $value)
+                                    <option value="{{ $value }}">{{ $value }}</option>
+                                @endforeach
                             </x-select>
                             <x-select class="p-[6.5px] w-full" name="filter_price" value="Price">
                                 <option value="" selected>Price Range Filter</option>
+                                <option value="0~100.000" >Under IDR 100.000</option>
+                                <option value="100.000~1.000.000" >IDR 100.000 ~ IDR 1.000.000</option>
+                                <option value="1.000.000~5.000.000" >IDR 1.000.000 ~ IDR 5.000.000</option>
+                                <option value="5.000.000~10.000.000" >IDR 5.000.000 ~ IDR 10.000.000</option>
+                                <option value="10.000.000~999.999.999.999.999" >Below IDR 10.000.000</option>
                             </x-select>
-                            <x-select class="p-[6.5px] w-full" name="filter_price" value="Price">
+                            <x-select class="p-[6.5px] w-full" name="filter_facility" value="Price">
                                 <option value="" selected>Facility Filter</option>
+                                @foreach ($facility as $fac)
+                                    <option value="{{ $fac->facility_name }}">{{ $fac->facility_name }}</option>
+                                @endforeach
                             </x-select>
                         </div><br>
                         <hr class="dark:border-[#464649] border-gray-200 w-full"><br>
+                        <div class="flex flex-wrap gap-2" id="tagContainer">
+                            
+                        </div><br>
+                        
                         <div class="flex justify-between">
                             <div class="flex flex-col">
                                 <x-a-label class="font-bold !text-gray-400">Showing</x-a-label>
                                 <x-a-label class="font-bold" id="itemResult">0 Result</x-a-label>
                             </div>
                             <div>
-                                <x-select class="p-[6.5px] w-full" name="filter_price" value="Price">
-                                    <option value="" selected>Newest</option>
+                                <x-select class="p-[6.5px] w-full" name="filter_situation" value="Situation">
+                                    <option value="newest" selected>Newest</option>
+                                    <option value="oldest" >Oldest</option>
+                                    <option value="lowtohigh" >Low to High Price</option>
+                                    <option value="highttolow" >Hight to Low Price</option>
                                 </x-select>
                             </div>
                         </div><br>

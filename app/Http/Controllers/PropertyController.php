@@ -11,6 +11,7 @@ use App\Models\Property_Contact;
 use Illuminate\Support\Facades\DB;
 use App\Models\Album;
 use App\Models\contact;
+use App\Models\property_visited;
 use Illuminate\Support\Facades\Auth;
 use App\Services\StreamChatService;
 use App\Rules\OwnsProperty;
@@ -46,35 +47,68 @@ class PropertyController extends Controller
         $filter = $request->search;
         $page = $request->page;
         $groupBy = $request->groupBy;
+        $filtering = $request->filter;
 
-        $getProperty = Property::select('property.property_name', 'property.id_cover', 'property.id_property', 'property_tag', 'property_category', 'id_user_owner',
-                DB::raw('(min(rent_price)) as min_price'),
-                'albums.imagePath as cover',
-                DB::raw('CONCAT(property_address.street_name, ", ", property_address.province, ", ", property_address.zipcode, ", ", property_address.country) as location'),
-                'longitude',
-                'latitude',
-                DB::raw('COUNT(rents.id_rent) as total_rent'),
-                DB::raw('COUNT(property_visiteds.id_property_visited) as total_visit'),
-                DB::raw('COUNT(property_favoriteds.id_property_favorited) as total_fav'),
-                DB::raw('COUNT(property_comments.id_property_commented) as total_comment'),
-                DB::raw('COALESCE(AVG(property_comments.rating), 0) as rating')
-            )
-            // ->where('property_category', $category)
-            ->join('rents', 'property.id_property', '=', 'rents.id_property')
-            ->join('albums', 'property.id_cover', '=', 'albums.id_album')
-            ->join('property_address', 'property.id_property', '=', 'property_address.id_property')
-            ->leftJoin('property_visiteds', 'property.id_property', '=', 'property_visiteds.id_property')
-            ->leftJoin('property_favoriteds', 'property.id_property', '=', 'property_favoriteds.id_property')
-            ->leftJoin('property_comments', 'property.id_property', '=', 'property_comments.id_property')
-            ->when($filter, function ($query, $search) {
-                $query->where('property_name', 'like', "%{$search}%");
-            })
-            ->groupBy('property.id_property')
-            ->when($request->orderBy, function ($query) use ($request) {
-                $orderBy = $request->orderBy;
-                $query->orderBy($orderBy, 'desc');
-            })
-            ->paginate($limit, ['*'], 'page', $page);
+        $getProperty = Property::select(
+            'property.property_name', 
+            'property.id_cover', 
+            'property.id_property', 
+            'property_tag', 
+            'property_category', 
+            'id_user_owner',
+            DB::raw('(min(rent_price)) as min_price'),
+            'albums.imagePath as cover',
+            DB::raw('CONCAT(property_address.street_name, ", ", property_address.province, ", ", property_address.zipcode, ", ", property_address.country) as location'),
+            'longitude',
+            'latitude',
+            DB::raw('COUNT(rents.id_rent) as total_rent'),
+            DB::raw('COUNT(property_visiteds.id_property_visited) as total_visit'),
+            DB::raw('COUNT(property_favoriteds.id_property_favorited) as total_fav'),
+            DB::raw('COUNT(property_comments.id_property_commented) as total_comment'),
+            DB::raw('COALESCE(AVG(property_comments.rating), 0) as rating')
+        )
+        ->join('rents', 'property.id_property', '=', 'rents.id_property')
+        ->join('albums', 'property.id_cover', '=', 'albums.id_album')
+        ->join('property_address', 'property.id_property', '=', 'property_address.id_property')
+        ->leftJoin('property_visiteds', 'property.id_property', '=', 'property_visiteds.id_property')
+        ->leftJoin('property_favoriteds', 'property.id_property', '=', 'property_favoriteds.id_property')
+        ->leftJoin('property_comments', 'property.id_property', '=', 'property_comments.id_property')
+        ->when($filter, function ($query, $search) {
+            $query->where('property_name', 'like', "%{$search}%");
+        })
+        ->when($filtering['filter_type'] ?? null, function ($query, $filterType) {
+            $query->whereIn('property_category', $filterType);
+        })
+        ->when($filtering['filter_price'] ?? null, function ($query, $filterPrice) {
+            $conditions = [];
+            $bindings = [];
+            
+            foreach ($filterPrice as $priceRange) {
+                [$minPrice, $maxPrice] = explode('~', str_replace('.', '', $priceRange));
+                $conditions[] = '(min(rent_price) BETWEEN ? AND ?)';
+                $bindings[] = (int)$minPrice;
+                $bindings[] = (int)$maxPrice;
+            }
+            
+            if (!empty($conditions)) {
+                $query->havingRaw(implode(' OR ', $conditions), $bindings);
+            }
+        })
+        ->when($filtering['filter_facility'] ?? null, function ($query, $filterFacility) {
+            $query->whereHas('rent', function ($query) use ($filterFacility) {
+                $query->whereHas('getRentFacility', function ($query1) use ($filterFacility) {
+                    $query1->whereHas('facility', function ($q) use ($filterFacility) {
+                        $q->whereIn('facility_name', $filterFacility);
+                    });
+                });
+            });
+        })
+        ->groupBy('property.id_property')
+        ->when($request->orderBy, function ($query) use ($request) {
+            $orderBy = $request->orderBy;
+            $query->orderBy($orderBy, 'desc');
+        })
+        ->paginate($limit, ['*'], 'page', $page);
         return response()->json([
             "success" => true,
             "message" => "Berhasil mengambil data Property " . $category,
@@ -142,6 +176,12 @@ class PropertyController extends Controller
 
     public function profile($id) {
         $property = Property::find($id)->with('album')->first();
+        if (property_visited::where("id_user", Auth::user()->id_user)->where("id_property", $id)->first() === null) {
+            property_visited::create([
+                'id_user' => Auth::user()->id_user,
+                'id_property' => $id,
+            ]);
+        }
         return view("view.property.property-page", [
             'property' => $property,
         ]);
@@ -168,8 +208,6 @@ class PropertyController extends Controller
             'longitude' => ['required', 'string'],
             'latitude' => ['required', 'string'],
         ]);
-
-        
 
         $getContact = contact::where('id_contact', $request->contact)->where('id_user', Auth::user()->id_user)->first();
 
@@ -263,7 +301,9 @@ class PropertyController extends Controller
             'bookings.orderNumber',
             'bookings.status',
             'bookings.id_booking',
-            'rents.rent_name'
+            'rents.rent_name',
+            'bookings.checkin',
+            'bookings.checkout'
         )
             ->join('contact_information', 'residents.id_user', '=', 'contact_information.id_user')
             ->join('bookings', 'residents.id_booking', '=', 'bookings.id_booking')
@@ -302,6 +342,12 @@ class PropertyController extends Controller
     {
         $getProperty = Property::where('id_property', $id)->first();
         return view('view.property.detail.guest', ['property' => $getProperty]);
+    }
+
+    public function showTask($id)
+    {
+        $getProperty = Property::where('id_property', $id)->first();
+        return view('view.property.detail.task', ['property' => $getProperty]);
     }
 
     /**

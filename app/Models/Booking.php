@@ -17,8 +17,24 @@ class Booking extends Model
         'orderNumber',
         'status',
         'checkin',
-        'checkout'
+        'checkout',
+        'isRated'
     ];
 
     protected $primaryKey = 'id_booking';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
+
+    public function rent()
+    {
+        return $this->belongsTo(Rent::class, 'id_rent', 'id_rent');
+    }
+
+    public function property()
+    {
+        return $this->belongsTo(Property::class, 'id_property', 'id_property');
+    }
 }

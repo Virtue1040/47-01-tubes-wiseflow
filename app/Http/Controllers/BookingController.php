@@ -14,6 +14,9 @@ use Midtrans\Snap;
 use App\Models\Rent;
 use App\Models\Order;
 use App\Models\orderdetails;
+use App\Models\payments;
+use App\Models\Resident;
+use DateTime;
 
 class BookingController extends Controller
 {
@@ -51,7 +54,6 @@ class BookingController extends Controller
      */
     public function store(StorebookingRequest $request)
     {
-
         $request->validate([
             "id_rent" => ['required', 'exists:rents,id_rent'],
             "checkin_date" => [
@@ -69,8 +71,26 @@ class BookingController extends Controller
         ]);
 
         $getRent = Rent::find($request->id_rent);
-        $makeOrder = "ORDER-BOOK-" . uniqid() . time();
+        if ($getRent->availability === 0) {
+            return response()->json([
+                "success" => false,
+                "message" => "Rumah tidak tersedia",
+            ], 400);
+        }
+        $getResident = Resident::where('id_rent', $request->id_rent)->count();
+        if ($getResident >= $getRent->stock) {
+            return response()->json([
+                "success" => false,
+                "message" => "Stock sudah penuh",
+            ], 400);
+        }
 
+        $checkIn = new DateTime($request->checkin_date);
+        $checkOut = new DateTime($request->checkout_date);
+        $getTotalDay = $checkIn->diff($checkOut)->days;
+        $price = $getRent->rent_price * $getTotalDay;
+
+        $makeOrder = "ORDER-BOOK-" . uniqid() . time();
         $order = Order::create([
             'orderNumber' => $makeOrder,
             'id_user' => Auth::user()->id_user,
@@ -78,12 +98,12 @@ class BookingController extends Controller
 
         $orderdetails = orderdetails::create([
             'orderNumber' => $makeOrder,
-            'checkNumber' => time(),
+            'checkNumber' => 'PAYMENT-' . time(),
             'status' => 'pending',
             'type_order' => 'booking',
             'id_item' => $getRent->id_rent,
             'quantity' => 1,
-            'total_order' => $getRent->rent_price,
+            'total_order' => $price,
         ]);
 
         $booking = Booking::create([
@@ -93,18 +113,18 @@ class BookingController extends Controller
             'checkin' => $request->checkin_date . ' ' . $request->checkin_time,
             'checkout' => $request->checkout_date . ' ' . $request->checkout_time,
             'orderNumber' => $makeOrder,
-            'status' => 'pending',
+            'status' => 'unpaid',
         ]);
 
         $transaction_details = array(
             'order_id'    => $makeOrder,
-            'gross_amount'  => $getRent->rent_price,
+            'gross_amount'  => $price,
           );
 
         $items = array(
             array(
                 'id'       => $getRent->id_rent,
-                'price'    => $getRent->rent_price,
+                'price'    => $price,
                 'quantity' => 1,
                 'name'     => 'Booking Rent ' . $getRent->rent_name 
             ),
@@ -124,20 +144,7 @@ class BookingController extends Controller
     }
 
     public function callback(Request $request) {
-        $order_id = $request->input('order_id');
-        $transaction_id = $request->input("transaction_id");
-        $status_code = $request->input('status_code');
-        $gross_amount = $request->input('gross_amount');
-        $transaction_status = $request->input('transaction_status');
-        $signature_key = $request->input('signature_key');
-        if (isset($signature_key)) {
-            $ServerKey = Config::$serverKey;
-
-            $getSignature = hash('sha512', ($order_id . $status_code . $gross_amount . $ServerKey));
-            if ($signature_key === $getSignature) {
-                
-            }
-        }
+        
     }
 
     /**
@@ -156,6 +163,7 @@ class BookingController extends Controller
         $groupBy = $request->groupBy;
         $bookings = $book::select(
             'id_booking',
+            'orderNumber',
             'bookings.id_user',
             'bookings.id_property',
             'bookings.id_rent',
@@ -163,6 +171,7 @@ class BookingController extends Controller
             'rent_name',
             'checkin',
             'checkout',
+            'isRated',
             'status',
         )
         ->join('property', 'bookings.id_property', '=', 'property.id_property')
@@ -222,8 +231,21 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Booking $booking)
+    public function destroy(Booking $booking, $id, Request $request)
     {
-        //
+        $booking = $booking::where("id_booking", $id)->where("id_user", Auth::user()->id_user)->where("status", "unpaid")->first();
+        $booking->delete();
+        if ($request->header('Accept') === 'application/json') {
+            return response()->json([
+                "success" => true,
+                "message" => "Berhasil menghapus data Booking",
+            ], 200);
+        } else {
+            session()->flash('alert', [
+                'type' => 'success',
+                'message' => 'Booking Deleted',
+            ]);
+            return redirect()->back();
+        }
     }
 }

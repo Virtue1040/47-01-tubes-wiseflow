@@ -82,10 +82,12 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function getAvgRatings() {
         $avgRatings = 0;
+        $counter = 0;
         foreach ($this->getProperty as $property) {
             $avgRatings += $property->getAvgRating();
+            $counter += 1;
         }
-        return $avgRatings % 5;
+        return $avgRatings / $counter;
     }
     public function getTotalComment() {
         $totalComment = 0;

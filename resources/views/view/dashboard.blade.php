@@ -8,7 +8,7 @@
     </x-slot>
     <script>
         $(document).ready(function() {
-            
+
             // var options = {
             //     series: [44, 55, 13, 43, 22],
             //     chart: {
@@ -60,76 +60,131 @@
                             <x-a-label>than last week</x-a-label>
                         </div>
                     </div>
-                    </x-nav-dropdown>
-                    <!-- Jumlah User -->
-                    <x-box-dropdown name="Jumlah User">
-                        <div class="mb-4 w-12 h-12 text-gray-700">
-                            <x-icon.user p="48" l="48" />
+                </x-box-dropdown>
+                <!-- Jumlah User -->
+                <x-box-dropdown name="Jumlah User">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.user p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $user['object']->count() }} User</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
+                                </div>
+                                <a>{{ $user['percent'] }}%</a>
+                            </div>
+                            <x-a-label>than last week</x-a-label>
                         </div>
-                        <div class="flex flex-col w-full gap-[15px]">
-                            <x-a-label class="text-lg runcate">{{ $user['object']->count() }} User</x-a-label>
-                            <hr class="dark:border-[#464649] border-gray-200 w-full">
-                            <div class="flex gap-[10px]">
-                                <div
-                                    class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
-                                    <div class="-rotate-90">
-                                        <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
-                                    </div>
-                                    <a>{{ $user['percent'] }}%</a>
+                    </div>
+                </x-box-dropdown>
+                <!-- Jumlah Owner -->
+                <x-box-dropdown name="Jumlah Owner">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.owner p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $owner['object']->count() }} Owner</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
                                 </div>
-                                <x-a-label>than last week</x-a-label>
+                                <a>{{ $property['percent'] }}%</a>
                             </div>
+                            <x-a-label>than last week</x-a-label>
                         </div>
-                        </x-nav-dropdown>
-                        <!-- Jumlah Owner -->
-                        <x-box-dropdown name="Jumlah Owner">
-                            <div class="mb-4 w-12 h-12 text-gray-700">
-                                <x-icon.owner p="48" l="48" />
+                    </div>
+                </x-box-dropdown>
+                <!-- Jumlah Resident -->
+                <x-box-dropdown name="Jumlah Resident">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.residents p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $resident['object']->count() }} Resident</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
+                                </div>
+                                <a>{{ $resident['percent'] }}%</a>
                             </div>
-                            <div class="flex flex-col w-full gap-[15px]">
-                                <x-a-label class="text-lg runcate">{{ $owner['object']->count() }} Owner</x-a-label>
-                                <hr class="dark:border-[#464649] border-gray-200 w-full">
-                                <div class="flex gap-[10px]">
-                                    <div
-                                        class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
-                                        <div class="-rotate-90">
-                                            <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
-                                        </div>
-                                        <a>{{ $property['percent'] }}%</a>
-                                    </div>
-                                    <x-a-label>than last week</x-a-label>
+                            <x-a-label>than last week</x-a-label>
+                        </div>
+                    </div>
+                </x-box-dropdown>
+                <!-- Jumlah facility -->
+                <x-box-dropdown name="Jumlah Fasilitas">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.facility p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $facility['object']->count() }} Fasilitas</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
                                 </div>
+                                <a>{{ $facility['percent'] }}%</a>
                             </div>
-                            </x-nav-dropdown>
-                            <!-- Jumlah Resident -->
-                            <x-box-dropdown name="Jumlah Resident">
-                                <div class="mb-4 w-12 h-12 text-gray-700">
-                                    <x-icon.residents p="48" l="48" />
+                            <x-a-label>than last week</x-a-label>
+                        </div>
+                    </div>
+                </x-box-dropdown>
+                <!-- Jumlah Order -->
+                <x-box-dropdown name="Jumlah Order">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.transaction p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $transaction['object']->count() }} Order</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
                                 </div>
-                                <div class="flex flex-col w-full gap-[15px]">
-                                    <x-a-label class="text-lg runcate">{{ $resident['object']->count() }}Resident</x-a-label>
-                                    <hr class="dark:border-[#464649] border-gray-200 w-full">
-                                    <div class="flex gap-[10px]">
-                                        <div
-                                            class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
-                                            <div class="-rotate-90">
-                                                <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
-                                            </div>
-                                            <a>{{ $resident['percent'] }}%</a>
-                                        </div>
-                                        <x-a-label>than last week</x-a-label>
-                                    </div>
+                                <a>{{ $transaction['percent'] }}%</a>
+                            </div>
+                            <x-a-label>than last week</x-a-label>
+                        </div>
+                    </div>
+                </x-box-dropdown>
+                <!-- Jumlah Booking -->
+                <x-box-dropdown name="Jumlah Booking">
+                    <div class="mb-4 w-12 h-12 text-gray-700">
+                        <x-icon.booking p="48" l="48" />
+                    </div>
+                    <div class="flex flex-col w-full gap-[15px]">
+                        <x-a-label class="text-lg runcate">{{ $booking['object']->count() }} Booking</x-a-label>
+                        <hr class="dark:border-[#464649] border-gray-200 w-full">
+                        <div class="flex gap-[10px]">
+                            <div
+                                class="flex gap-[5px] bg-[#5E93DA] w-fit text-xs p-[3px] rounded-full px-[5px] max-h-[25px] items-center">
+                                <div class="-rotate-90">
+                                    <x-icon.arrow-right p="20" l="20"></x-icon.arrow-right>
                                 </div>
-                            </x-nav-dropdown>
-                            <x-box-dropdown name="Property Category Statistic">
-                                <div id="chart">
-
-                                </div>
-                            </x-box-dropdown>
+                                <a>{{ $booking['percent'] }}%</a>
+                            </div>
+                            <x-a-label>than last week</x-a-label>
+                        </div>
+                    </div>
+                </x-box-dropdown>
             </div>
         </div>
     </div>
-   
+
 
 
 </x-app-layout>
