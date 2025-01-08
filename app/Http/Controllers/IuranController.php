@@ -52,7 +52,7 @@ class IuranController extends Controller
         )
         ->join('property', 'iurans.id_property', '=', 'property.id_property')
         ->leftJoin('iuran_pays', 'iurans.id_iuran', '=', 'iuran_pays.id_iuran')
-        ->where('iuran_pays.id_user', Auth::user()->id_user)
+        ->leftJoin('users', 'iuran_pays.id_user', '=', 'users.id_user') 
         ->when($filter, function ($query, $search) {
             $query->where('status', 'like', "%{$search}%")
                   ->orWhere('iuran_desc', 'like', "%{$search}%")

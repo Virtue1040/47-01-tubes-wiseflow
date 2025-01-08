@@ -124,7 +124,7 @@
         <main class="container px-4 mx-auto mt-2">
 
             <div class="flex flex-row px-6 mt-8">
-                <x-a-label class="text-2xl !text-white font-bold">Hallo!, {{ Auth::user()->getRoleNames()[0] }}</x-a-label>
+                <x-a-label class="text-2xl font-bold">Hallo!, {{ Auth::user()->getRoleNames()[0] }}</x-a-label>
                 {{-- <x-a-label class="" id="itemResult !text-gray-400">0 Result</x-a-label> --}}
             </div>
 

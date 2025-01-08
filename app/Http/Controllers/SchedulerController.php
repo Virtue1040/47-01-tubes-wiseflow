@@ -17,12 +17,19 @@ class SchedulerController extends Controller
      */
     public function index()
     {
-        $tasks = Task::where("id_user", Auth::user()->id_user)
+        $tasks = Task::select(
+            'task_name',
+            'property_name',
+            'rent_name',
+            'task_desc',
+            'tasks.created_at'
+        )
+        ->where("id_user", Auth::user()->id_user)
         ->join('property', 'property.id_property', '=', 'tasks.id_property')
         ->join('rents', 'rents.id_rent', '=', 'tasks.id_rent')
         ->get()
         ->groupBy(function ($task) {
-            return \Carbon\Carbon::parse($task->created_at)->format('D F Y');
+            return \Carbon\Carbon::parse($task->created_at)->format('D d F Y');
         });
         return view('view.calendar', [
             "tasks" => $tasks

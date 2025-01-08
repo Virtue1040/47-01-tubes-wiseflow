@@ -9,7 +9,7 @@
 
     <div class="mx-auto max-w-5xl">
         <x-box-dropdown class="w-[100%] h-full" name="My Tasks" disableDropdown=true>
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-4">
                 @foreach ($tasks as $date => $taskGroup)
                     <x-box-dropdown class="w-[100%] h-full" name="{{ $date }}">
                         <div class="space-y-4">

@@ -324,8 +324,8 @@
                                 Property Profile
                             </a>
                         </button>
-                        <button @click="openedMenu = 'Group'"
-                            x-bind:class="openedMenu === 'Group' ? 'dark:bg-[#27272a] bg-white dark:bg-opacity-30' :
+                        <button @click="openedMenu = 'Description'"
+                            x-bind:class="openedMenu === 'Description' ? 'dark:bg-[#27272a] bg-white dark:bg-opacity-30' :
                                 'hover:dark:bg-[#27272a] hover:dark:bg-opacity-10 hover:bg-white hover:bg-opacity-30'"
                             class="w-full border-b-0 border-gray-200 p-[5px] rounded-xl rounded-b-none  "><a
                                 class="text-black dark:text-gray-300">
@@ -399,6 +399,9 @@
 
                                 </div>
                             </div>
+                        </div>
+                        <div x-show="openedMenu === 'Description'" class="h-full p-[25px] max-w-[62%] w-full pb-[30px]">
+                            <x-a-label class="text-xl">{!! $property->property_desc !!}</x-a-label>
                         </div>
                     </div>
                 </div>

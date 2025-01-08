@@ -53,7 +53,6 @@
                             type: "POST",
                             data: {},
                             success: function(response) {
-                                console.log(response);
                                 if (response.success) {
                                     let buttonContinue = div.find("button[name='continue']");
                                     let buttonBack = div.find("button[name='back']");
@@ -66,6 +65,7 @@
                                                 icon: 'success',
                                                 title: 'Bill Successfuly Paid',
                                             });
+                                            window.location.reload();
                                             div.remove();
                                         },
                                         onPending: function (result) {
