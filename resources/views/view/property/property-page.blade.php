@@ -278,7 +278,7 @@
                 </div>
                 <div class="flex flex-col justify-center gap-[2px] w-full h-full">
                     <x-a-label class="text-[32px] font-bold">{{ $property->property_name }}</x-a-label>
-                    <x-a-label class="font-bold text-md">{{ $property->getLocation() }}</x-a-label>
+                    <x-a-label class="text-md">{{ $property->getLocation() }}</x-a-label>
                     <div class="flex gap-[10px] mt-6">
                         <div class="flex gap-[10px] items-center">
                             <div
@@ -310,6 +310,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
         <div x-data="{ openedMenu: 'Profile' }">
@@ -413,33 +414,60 @@
                 <x-a-label class="text-xl font-bold">The Property</x-a-label><br>
                 <x-a-label class="!text-gray-400 text-md">Detailed data about this property</x-a-label>
                 <div class="flex gap-6 mt-8 w-full">
-                    <x-box-dropdown class="w-[70%] h-full" name="Property details">
-                        <div class="flex justify-between">
-                            <div class="flex flex-col gap-[30px]">
-                                <div>
-                                    <x-a-label class="!text-gray-400">Property type</x-a-label><br>
-                                    <x-a-label class="mt-4">{{ $property->property_category }}</x-a-label>
+                    <div class="flex flex-col gap-6 w-[70%]">
+                        <x-box-dropdown class="w-full h-fit" name="Property details">
+                            <div class="flex justify-between">
+                                <div class="flex flex-col gap-[30px]">
+                                    <div>
+                                        <x-a-label class="!text-gray-400">Property type</x-a-label><br>
+                                        <x-a-label class="mt-4">{{ $property->property_category }}</x-a-label>
+                                    </div>
+                                    <div>
+                                        <x-a-label class="!text-gray-400">Rating</x-a-label><br>
+                                        <div class="flex gap-1 items-center">
+                                            <x-a-label class="">{{ $property->getAvgRating() + 0 }}</x-a-label>
+                                            <x-icon.star p="20" l="20" filled/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <x-a-label class="!text-gray-400">Rating</x-a-label><br>
-                                    <div class="flex gap-1 items-center">
-                                        <x-a-label class="">{{ $property->getAvgRating() + 0 }}</x-a-label>
-                                        <x-icon.star p="20" l="20" filled/>
+                                <div class="flex flex-col gap-[30px]">
+                                    <div>
+                                        <x-a-label class="!text-gray-400">Property Facility</x-a-label><br>
+                                        <x-a-label class="mt-4">{{ $property->facility->count() }} Facility</x-a-label>
+                                    </div>
+                                    <div>
+                                        <x-a-label class="!text-gray-400">Property Rent</x-a-label><br>
+                                        <x-a-label class="mt-4">{{ $property->rentPublic->count() }} Rents</x-a-label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-[30px]">
-                                <div>
-                                    <x-a-label class="!text-gray-400">Property Facility</x-a-label><br>
-                                    <x-a-label class="mt-4">{{ $property->facility->count() }} Facility</x-a-label>
+                        </x-box-dropdown>
+                        @if($property->getComment->count() > 0)
+                            <x-box-dropdown class="w-full h-fit" name="Reviews">
+                                <div
+                                    class="overflow-y-auto [&::-webkit-scrollbar]:w-2
+                                [&::-webkit-scrollbar-track]:rounded-full
+                                [&::-webkit-scrollbar-thumb]:rounded-full
+                                [&::-webkit-scrollbar-thumb]:bg-[#5E93DA] h-[200px]">
+                                    <div class="flex gap-[15px] w-full h-full flex-col pr-[10px]">
+                                        @foreach ($property->getComment as $comment)
+                                            @php
+                                                $imaegPath = $comment->rent->id_cover !== null ? $comment->rent->album->imagePath : "a"
+                                            @endphp
+                                            <x-card.reviews fullName="{{ $comment->user->getFullName() }}"
+                                                comment="{{ $comment->comment }}" rating="{{ $comment->rating }}"
+                                                imgUrl="{{ $comment->user->getAvatarUrl() }}"
+                                                rentCover="{{ asset('storage/' . $imaegPath) }}"
+                                                rentName="{{ $comment->rent->rent_name }}"
+                                                propertyId="{{ $property->id_property }}"
+                                                :disableLink=true
+                                                rentId="{{ $comment->rent->id_rent }}"/>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div>
-                                    <x-a-label class="!text-gray-400">Property Rent</x-a-label><br>
-                                    <x-a-label class="mt-4">{{ $property->rentPublic->count() }} Rents</x-a-label>
-                                </div>
-                            </div>
-                        </div>
-                    </x-box-dropdown>
+                            </x-box-dropdown>
+                        @endif
+                    </div>
                     <x-box-dropdown class="w-full" name="Rents">
                         <div class="flex gap-[15px] flex-col">
                             @foreach ($property->rentPublic as $rent)

@@ -1,4 +1,4 @@
-@props(['fullName' => "", 'comment' => "", 'rating' => 1, 'imgUrl' => "a", 'rentCover' => 'a', 'rentName' => '', 'rentId' => '', 'propertyId' => ''])
+@props(['fullName' => "", 'comment' => "", 'rating' => 1, 'imgUrl' => "a", 'rentCover' => 'a', 'rentName' => '', 'rentId' => '', 'propertyId' => '', 'disableLink' => false])
 
 <div class="p-3 w-full h-auto rounded-xl dark:bg-[#242427] bg-gray-100 flex justify-between gap-[10px]">
     <div>
@@ -26,7 +26,15 @@
         </div>
     </div>
     <div class="w-[88px] flex">
-            <div onclick="window.location.href='{{ route('property.detail.rent.overview', ['id' => $propertyId, 'id_rent' => $rentId]) }}'" class="cursor-pointer flex flex-col justify-center items-center gap-[5px] w-full">
+            <div 
+                @if(!$disableLink)
+                    onclick="window.location.href='{{ route('property.detail.rent.overview', ['id' => $propertyId, 'id_rent' => $rentId]) }}'" 
+                @endif    
+                class="
+                @if(!$disableLink)
+                    cursor-pointer 
+                @endif
+                flex flex-col justify-center items-center gap-[5px] w-full">
                 <x-a-label class="w-full truncate">{{ $rentName }}</x-a-label>
                 <img src="{{ $rentCover }}" onerror="this.src='{{ asset('img/placeholder.png') }}'" alt="Cover Rent" class="object-cover w-[88px] h-[88px] rounded-2xl">
             </div>
